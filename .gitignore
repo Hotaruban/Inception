@@ -1,4 +1,4 @@
 # file to exclude in the git repository
-./*.pdf
-./*.txt
+*en.subject.pdf
+*TODO.txt
 
