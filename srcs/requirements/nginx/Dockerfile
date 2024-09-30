@@ -2,15 +2,11 @@ FROM debian:buster
 
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install vim -y
-
-RUN apt-get install curl -y
-
 RUN apt-get install nginx -y
 
-RUN apt-get install openssl -y
-
 RUN mkdir -p /etc/nginx/ssl
+
+RUN apt-get install openssl -y
 
 # the option -nodes is used to create a private key without a passphrase
 # the option -x509 is used to create a self-signed certificate
@@ -19,6 +15,14 @@ RUN mkdir -p /etc/nginx/ssl
 # the option -subj is used to specify the subject of the certificate
 RUN openssl req -x509 -nodes -out /etc/nginx/ssl/jhurpy.42.fr.crt -keyout /etc/nginx/ssl/jhurpy.42.fr.key -days 365 -subj "/C=TH/ST=Bangkok/L=Bangkok/O=42BKK/OU=42/CN=jhurpy.42.fr"
 
-RUN mkdir -p /var/www/nginx
+RUN mkdir -p /var/run/nginx
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
+
+# confirm access right for root
+RUN chmod 755 /var/www/html
+
+# confirm access right for principal user
+RUN chmod -R www-data:www-data /var/www/html
+
+CMD [ "nginx", "-g", "deamon off;" ]
