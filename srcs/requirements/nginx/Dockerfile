@@ -1,11 +1,18 @@
 FROM debian:buster
 
+# update and upgrade the system
 RUN apt-get update && apt-get upgrade -y
 
+# install nginx
 RUN apt-get install nginx -y
 
+# install vim and curl
+RUN apt-get install vim curl -y
+
+# create a directory for storing the ssl certificate and the private key
 RUN mkdir -p /etc/nginx/ssl
 
+# install openssl
 RUN apt-get install openssl -y
 
 # the option -nodes is used to create a private key without a passphrase
@@ -13,10 +20,15 @@ RUN apt-get install openssl -y
 # the option -out is used to specify the output file for the certificate
 # the option -keyout is used to specify the output file for the private key
 # the option -subj is used to specify the subject of the certificate
+		#/C=TH : Country
+		#/ST=Bangkok : State
+		#/L=Bangkok : Locality
+		#/O=MyCompany : Organisation (Company)
+		#/OU=IT : Organisation unit (IT department)
+		#/CN=mycompany.com : Common Name (domain name)
 RUN openssl req -x509 -nodes -out /etc/nginx/ssl/jhurpy.42.fr.crt -keyout /etc/nginx/ssl/jhurpy.42.fr.key -days 365 -subj "/C=TH/ST=Bangkok/L=Bangkok/O=42BKK/OU=42/CN=jhurpy.42.fr"
 
-RUN mkdir -p /var/run/nginx
-
+# copy our configuration file of nginx to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # confirm access right for root
