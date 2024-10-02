@@ -6,9 +6,6 @@ RUN apt-get update && apt-get upgrade -y
 # install nginx
 RUN apt-get install nginx -y
 
-# install vim and curl
-RUN apt-get install vim curl -y
-
 # create a directory for storing the ssl certificate and the private key
 RUN mkdir -p /etc/nginx/ssl
 
@@ -31,10 +28,5 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/jhurpy.42.fr.crt -keyout /etc/n
 # copy our configuration file of nginx to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-# confirm access right for root
-RUN chmod 755 /var/www/html
-
-# confirm access right for principal user
-RUN chmod -R www-data:www-data /var/www/html
-
-CMD [ "nginx", "-g", "deamon off;" ]
+# execute the command to start nginx
+CMD [ "nginx", "-g", "daemon off;" ]
