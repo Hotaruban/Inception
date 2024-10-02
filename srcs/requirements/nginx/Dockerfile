@@ -28,5 +28,7 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/jhurpy.42.fr.crt -keyout /etc/n
 # copy our configuration file of nginx to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
+EXPOSE 443
+
 # execute the command to start nginx
-CMD [ "nginx", "-g", "daemon off;" ]
+ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
