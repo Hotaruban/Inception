@@ -28,7 +28,11 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/jhurpy.42.fr.crt -keyout /etc/n
 # copy our configuration file of nginx to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
+# Expose the port
 EXPOSE 443
+
+# Set the metadata for the image an author
+LABEL org.opencontainers.image.authors="jhurpy"
 
 # execute the command to start nginx
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
