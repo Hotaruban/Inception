@@ -1,4 +1,6 @@
-FROM debian:buster
+FROM debian:bookworm
+# Set the metadata for the image an author
+LABEL org.opencontainers.image.authors="jhurpy"
 
 # update and upgrade the system
 RUN apt-get update && apt-get upgrade -y
@@ -31,8 +33,6 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 # Expose the port
 EXPOSE 443
 
-# Set the metadata for the image an author
-LABEL org.opencontainers.image.authors="jhurpy"
 
 # execute the command to start nginx
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
