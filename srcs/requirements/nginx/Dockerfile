@@ -4,6 +4,7 @@ LABEL org.opencontainers.image.authors="jhurpy"
 
 # update and upgrade the system
 RUN apt-get update && apt-get upgrade -y
+RUN rm -rf /var/lib/apt/lists/*
 
 # install nginx
 RUN apt-get install nginx -y
