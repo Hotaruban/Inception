@@ -1,6 +1,6 @@
 FROM debian:bookworm
 # Set the metadata for the image an author
-LABEL org.opencontainers.image.authors="jhurpy"
+LABEL org.opencontainers.image.authors="Hotaruban"
 
 # update and upgrade the system
 RUN apt-get update && apt-get upgrade -y
