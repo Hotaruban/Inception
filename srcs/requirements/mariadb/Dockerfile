@@ -40,5 +40,8 @@ VOLUME /var/lib/mysql
 # Expose the port (default port for MariaDB)
 EXPOSE 3306
 
+# Set the user to mysql to run the service for security reasons
+USER mysql
+
 # Start the service
 ENTRYPOINT ["mysqld"]
