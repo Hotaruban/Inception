@@ -1,4 +1,4 @@
-<p align = "center"> Project Inception </p>
+# <p align = "center"> Inception </p>
 <p align = "center"> <a href = https://github.com/Hotaruban><img webserv = "webserv" src = "./inceptionn.png"></a></p>
 
 ### Objective
