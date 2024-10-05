@@ -18,10 +18,8 @@ RUN rm -rf /var/lib/apt/lists/*
 # Install MariaDB
 RUN apt-get install mariadb-server -y
 
-# Copy the configuration file
+# Copy the configuration file and the script to the container
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-
-# Copy the script to create the database
 COPY ./tools/ /root/tools/
 
 # Run the script to create the database
@@ -37,7 +35,7 @@ RUN rm -rf /root/tools
 # Define the volumes
 VOLUME /var/lib/mysql
 
-# Expose the port (default port for MariaDB)
+# Expose the port 3306 for information
 EXPOSE 3306
 
 # Set the user to mysql to run the service for security reasons

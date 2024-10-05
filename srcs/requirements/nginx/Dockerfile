@@ -26,14 +26,16 @@ RUN apt-get install openssl -y
 		#/O=MyCompany : Organisation (Company)
 		#/OU=IT : Organisation unit (IT department)
 		#/CN=mycompany.com : Common Name (domain name)
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/jhurpy.42.fr.crt -keyout /etc/nginx/ssl/jhurpy.42.fr.key -days 365 -subj "/C=TH/ST=Bangkok/L=Bangkok/O=42BKK/OU=42/CN=jhurpy.42.fr"
+RUN openssl req -x509 -nodes -days 365\
+	-out /etc/nginx/ssl/jhurpy.42.fr.crt\
+	-keyout /etc/nginx/ssl/jhurpy.42.fr.key\
+	-subj "/C=TH/ST=Bangkok/L=Bangkok/O=42BKK/OU=42/CN=jhurpy.42.fr"
 
 # copy our configuration file of nginx to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-# Expose the port
+# Expose the port 443 for information
 EXPOSE 443
-
 
 # execute the command to start nginx
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
