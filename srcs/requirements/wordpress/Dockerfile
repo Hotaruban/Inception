@@ -24,18 +24,16 @@ RUN rm -rf /var/lib/apt/lists/*
 
 # Install Wordpress
 RUN apt-get install -y wget
+RUN wget https://wordpress.org/6.6.tar.gz -P /var/www/html/
+RUN tar -xvf /var/www/html/6.6.tar.gz -C /var/www/html/
+RUN rm -rf /var/www/html/6.6.tar.gz
+RUN chown -R root:root /var/www/html/wordpress
 
 # Install PHP
 RUN apt-get install -y php8.3\
 	php-fpm\
 	php-mysql\
 	mariadb-client
-
-# Install Wordpress
-RUN wget https://wordpress.org/6.6.tar.gz -P /var/www/html/
-RUN tar -xvf /var/www/html/6.6.tar.gz -C /var/www/html/
-RUN rm -rf /var/www/html/6.6.tar.gz
-RUN chown -R root:root /var/www/html/wordpress
 
 # Install WP-CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp/
