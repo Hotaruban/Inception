@@ -29,7 +29,7 @@ RUN rm -rf /root/tools
 # Create directory with correct permissions and ownership for socket
 RUN mkdir -p /var/run/mysqld
 RUN chown -R mysql:mysql /var/run/mysqld
-RUN chmod 755 /var/run/mysqld
+RUN chmod 777 /var/run/mysqld
 
 # Define the volumes
 VOLUME /var/lib/mysql
