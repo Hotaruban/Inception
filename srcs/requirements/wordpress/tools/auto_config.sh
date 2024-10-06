@@ -5,13 +5,17 @@ sleep 10
 if mysqladmin ping -h mariadb --silent; then
 	echo "MariaDB is up and running!"
 
-	# Auto config for wordpress
-	wp download --allow-root
+	# Auto config for WordPress
+	if [ ! -f /var/www/html/wp-config.php ]; then
+		wp core download --allow-root --path='/var/www/html'
+	fi
+
 	wp config create --allow-root \
 		--dbname=$MYSQL_DATABASE \
 		--dbuser=$MYSQL_USER \
 		--dbpass=$MYSQL_PASSWORD \
 		--dbhost=mariadb:3306 \
+		--path='/var/www/html'
 
 	wp core install --allow-root \
 		--url=$WORDPRESS_URL \
@@ -19,15 +23,17 @@ if mysqladmin ping -h mariadb --silent; then
 		--admin_user=$WORDPRESS_ADMIN_USER \
 		--admin_password=$WORDPRESS_ADMIN_PASSWORD \
 		--admin_email=$WORDPRESS_ADMIN_EMAIL \
+		--path='/var/www/html'
 
 	wp user create --allow-root \
 		$WORDPRESS_USER $WORDPRESS_USER_EMAIL \
 		--role=author \
 		--user_pass=$WORDPRESS_USER_PASSWORD \
+		--path='/var/www/html'
 
-	wp plugin update --all --allow-root
+	wp plugin update --all --allow-root --path='/var/www/html'
 
-	chown -R www-data:www-data
+	chown -R www-data:www-data /var/www/html
 
 	/usr/sbin/php-fpm8.2 -F
 
