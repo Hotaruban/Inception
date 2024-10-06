@@ -9,6 +9,7 @@ all: setup run
 
 setup:
 	@echo "Setting up the environment..."
+	@sudo usermod -aG docker $(USER)
 	@sudo mkdir -p $(WP_PATH) $(DB_PATH)
 	@chown -R $(USER):$(USER) $(WP_PATH) $(DB_PATH)
 
