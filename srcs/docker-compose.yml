@@ -12,7 +12,7 @@ services:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
     volumes:
-      - mariadb:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     restart: unless-stopped
     expose:
       - 3306
