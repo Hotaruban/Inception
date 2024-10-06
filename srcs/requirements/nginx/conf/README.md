@@ -1,19 +1,16 @@
-## Creation du config file
+## Creating the Configuration File
 
-Maintenant que nous avons le Dockerfile, il nous faut faire le config file pour pouvoir demarrer le serveur nginx avec les configuration demande par le sujet. Celui-ci permet de definir au serveur, les configurations d’ecoute des requetes qui lui sont envoyer, mais aussi je configurer les regles de securite.
+Now that we have the Dockerfile, we need to create the configuration file to start the Nginx server with the required settings. This file defines the server's behavior for handling incoming requests and sets security rules.
 
-Nous commencons avec le bloc events qui contiens les options generales du serveur, il ne peut y avoir qu'un seul bloc `events`. Pour notre projets, il n’est pas necessaire de lui donner des options.
+We'll begin with the events block, which contains general server options. There can only be one events block. For our project, there is no need to specify any options here.
 
-```docker
-events {
+```events {
 
-}
-```
+}```
 
-Ensuite nous ajoutons le bloc http qui va lui nous interresser beaucoup plus, il permet de configurer les spécificités d’un serveur `http` dans `Nginx`. ([voir le lien](https://www.notion.so/Details-of-Nginx-server-11300086bfc88067ad5bd673e3219294?pvs=21))
+Next, we add the http block, which is more important for configuring the specifics of an http server in Nginx.
 
-```docker
-events {
+```events {
 
 }
 
@@ -21,17 +18,15 @@ http {
 	include /etc/nginx/mime.types;
 	default_type application/octet-stream;
 
-}
-```
+}```
 
-“include” permet d’ajouter les mime.types, ce qui permet de plus facilement identifier le type des fichier. ([voir le lien](https://www.notion.so/Set-up-Ngnix-Server-10a00086bfc88065abe2f509116d6394?pvs=21))
+The include directive adds the mime types, making it easier to identify file types.
 
-“default_type” defini le type du fichier en octet-stream qui est un type general pour telecharger les fichiers, s’il n’est pas trouve dans mime.type. ([voir le lien](https://www.notion.so/Set-up-Ngnix-Server-10a00086bfc88065abe2f509116d6394?pvs=21))
+The default_type specifies the default file type as octet-stream, a general type used for file downloads if the file type isn't found in mime.types.
 
-Dans ce bloc nous allons ajouter le bloc `server` , il peut y avoir plusieurs bloc server ce qui permet a `Nginx` de gerer plusieurs sites en meme temps, il va indiquer les spécificités sur comment le server doit reagir selon les different domaine ou groupe de domaine.
+Within this block, we add the server block. Multiple server blocks can exist, allowing Nginx to manage several sites simultaneously, defining how the server reacts based on different domains.
 
-```docker
-events {
+```events {
 
 }
 
@@ -42,15 +37,13 @@ http {
 	server {
 
 	}
-}
-```
+}```
 
-Dans le bloc `server` nous ajouter les differents parametrages comme souhaiter par le sujet.
+In the server block, we add the necessary configurations as required by the project.
 
-D’abord nous allons faire les configuration SSL
+Let's start with the SSL settings:
 
-```docker
-events {
+```events {
 
 }
 
@@ -65,19 +58,14 @@ http {
 		ssl_certificate_key /etc/nginx/ssl/jhurpy.42.fr.key;
 
 	}
-}
-```
+}```
 
-“listen 443 ssl;” va indiquer a notre server d’etre accessible uniquement sur le port 443.
+listen 443 ssl; tells the server to be accessible only on port 443.
+ssl_protocols TLSv1.2 TLSv1.3; specifies the supported SSL protocols, keeping only TLSv1.2 and TLSv1.3 as required.
+ssl_certificate and ssl_certificate_key define the paths to the server's SSL certificate.
+Next, let's configure the server's root and server_name.
 
-“ssl_protocols TLSv1.2 TLSv1.3;” permet au server d’echanger avec le client de maniere privee, nous gardons uniquement TLSv1.2 et TLSv1.3 comme demander par le sujet. ([voir le lien](https://www.ibm.com/docs/en/ibm-http-server/9.0.5?topic=communications-secure-sockets-layer-ssl-protocol))
-
-“ssl_certificate” et “ssl_certificate_key” sont les routes d’acces au certificat ssl de notre serveur.
-
-Ensuite, nous allons ajouter les configuration root et server_name du server.
-
-```docker
-events {
+```events {
 
 }
 
@@ -95,19 +83,14 @@ http {
 		server_name jhurpy.42.fr www.jhurpy.42.fr;
 		index index.php index.html index.htm;
 	}
-}
-```
+}```
 
-“root” indique l’emplacement de depart de notre serveur pour l’acces au fichier.
+root specifies the root directory for file access.
+server_name lists the domain names through which the server can be accessed.
+index sets the default page to open if no specific page is requested.
+We now add a location block to display a custom 404 error page for unknown requests.
 
-“server_name” va indiquer le nom des servers name par lequel on peut acceder a notre server.
-
-“index” va indiquer la page a ouvrir par default si aucune autre page n’est demande.
-
-Nous maintenant ajouter un bloc `location`  afin d’ajouter une regle d’affichage de la page d’erreur 404 si la requete demande est inconnu
-
-```docker
-events {
+```events {
 
 }
 
@@ -126,21 +109,17 @@ http {
 		index index.php index.html index.htm;
 
 		location / {
-				try_files $uri $uri/ =404;
+			try_files $uri $uri/ =404;
 
 		}
 	}
-}
-```
+}```
 
-“/” va determiner le point de depart du chemin a suivre qui sera pour le coup “/var/www/html” le point de depart indiquer dans les configurations du serveur.
+/ defines the root path, set to /var/www/html as per the server's configuration.
+try_files first tries static files before returning the 404 error page.
+Let's now add another location block to access our WordPress site.
 
-“try_files” va d’abord essayer les fichiers static avant de retourner la page `error404`
-
-Nous allons ajouter un autre bloc `location` afin d’acceder a notre site `Wordpress`
-
-```docker
-events {
+```events {
 
 }
 
@@ -159,7 +138,7 @@ http {
 		index index.php index.html index.htm;
 
 		location / {
-				try_files $uri $uri/ =404;
+			try_files $uri $uri/ =404;
 
 		}
 
@@ -174,27 +153,19 @@ http {
 
 		}
 	}
-}
-```
+}```
 
-“~ \.php$” Le symbole `~` indique que cette location utilise une expression régulière. Cette ligne signifie que cette configuration s'applique à toutes les requêtes dont l'URL se termine par `.php`
+~ \.php$ specifies that this location applies to all requests ending with .php.
+fastcgi_split_path_info divides the request path to get the PHP script and additional path info.
+fastcgi_pass forwards the request to the FastCGI server (in this case, the WordPress container).
+fastcgi_index sets the default PHP file to execute, such as index.php.
+include adds predefined FastCGI parameters.
+fastcgi_param SCRIPT_FILENAME defines the full path to the PHP script.
+fastcgi_param PATH_INFO includes any additional path information after the PHP script.
+Finally, let's add the following directives to the server:
 
-“fastcgi_split_path_info” Cette directive divise le chemin de la requête pour obtenir le script PHP et les informations de chemin. Elle permet à NGINX de gérer les requêtes qui contiennent à la fois un fichier PHP et un chemin d'accès supplémentaire.
 
-“fastcgi_pass” Cela indique à NGINX de passer la requête au serveur FastCGI, qui est ici le conteneur WordPress à l'adresse `wordpress:9000`. Cela permet d'exécuter le script PHP à l'intérieur du conteneur WordPress.
-
-“fastcgi_index” Cette directive définit le fichier par défaut à exécuter lorsque le chemin demandé est un répertoire. Dans ce cas, si quelqu'un accède à `/`, NGINX essaiera d'exécuter `index.php`.
-
-“include” Cela inclut les paramètres FastCGI prédéfinis. Ces paramètres sont nécessaires pour passer des informations au serveur FastCGI (comme le chemin du script à exécuter).
-
-“fastcgi_param” Définit le paramètre `SCRIPT_FILENAME`, qui est le chemin complet vers le script PHP à exécuter. `$document_root` correspond à la racine définie dans le bloc `server`, et `$fastcgi_script_name` correspond au nom du script demandé.
-
-“fastcgi_param” Définit le paramètre `PATH_INFO`, qui contient le chemin supplémentaire après le script PHP. Cela est utile pour les frameworks qui utilisent des routes.
-
-Nous allons pour finir ajouter les directive suivante dans le serveur.
-
-```docker
-events {
+```events {
 
 }
 
@@ -213,7 +184,7 @@ http {
 		index index.php index.html index.htm;
 
 		location / {
-				try_files $uri $uri/ =404;
+			try_files $uri $uri/ =404;
 
 		}
 
@@ -231,9 +202,7 @@ http {
 		access_log /var/log/nginx/access.log;
 		error_log /var/log/nginx/error.log;
 	}
-}
-```
+}```
 
-“access_log” Cette directive configure le fichier de **journal des accès**. Elle enregistre chaque requête traitée par NGINX, y compris l'heure de la requête, l'adresse IP de l'utilisateur, l'URL demandée, le statut de la réponse, etc.
-
-“error_log” Cette directive configure le fichier de **journal des erreurs**. Il enregistre les erreurs générées par NGINX, ce qui est crucial pour le débogage et la maintenance du serveur.
+access_log configures the access log file, which records every request processed by Nginx.
+error_log configures the error log file, which logs errors generated by Nginx, essential for debugging and server maintenance.
