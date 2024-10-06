@@ -22,6 +22,7 @@ RUN apt-get update && apt-get upgrade -y
 
 # Install Wordpress
 RUN apt-get install -y wget
+RUN mkdir -p /var/www/html
 RUN wget https://wordpress.org/wordpress-6.6.2.tar.gz -P /var/www/html
 RUN tar -xvf /var/www/html/wordpress-6.6.2.tar.gz -C /var/www/html
 RUN mv /var/www/html/wordpress/* /var/www/html/
@@ -39,8 +40,6 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN chmod +x /tmp/wp-cli.phar
 RUN mv /tmp/wp-cli.phar /usr/local/bin/wp
 RUN wp cli update
-
-RUN ls /etc/php/
 
 # Copy the configuration file and the script to the container
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
