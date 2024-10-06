@@ -8,7 +8,7 @@ For this project, we use **`debian:bookworm`** ← currently the latest stable v
 
 Next, we update the system inside the container with the apt-get update and apt-get upgrade -y commands (the -y option automatically confirms all prompts) using the Docker RUN command. After the update, we remove the package list files to reduce the size of the Docker image.
 
-> `RUN apt-get update && apt-get upgrade -y`
+> `RUN apt-get update && apt-get upgrade -y`<br>
 > `RUN rm -rf /var/lib/apt/lists/*`
 
 We then install nginx, which will make our NGINX server available.
@@ -17,7 +17,7 @@ We then install nginx, which will make our NGINX server available.
 
 Next, we proceed with the installation of OpenSSL, which will allow us to create an SSL certificate to secure the server. We will also create a folder to store the SSL certificates with the following command:
 
-> `RUN apt-get install openssl -y`
+> `RUN apt-get install openssl -y`<br>
 > `RUN mkdir -p /etc/nginx/ssl`
 
 We then generate the SSL certificates with the command:
