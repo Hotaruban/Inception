@@ -6,7 +6,7 @@ if mysqladmin ping -h mariadb --silent; then
 	echo "MariaDB is up and running!"
 
 	# Auto config for wordpress
-	wp core download --allow-root
+	#wp core download --allow-root
 	wp language core install en_EN --allow-root
 	wp config create --allow-root \
 		--dbname=$MYSQL_DATABASE \
