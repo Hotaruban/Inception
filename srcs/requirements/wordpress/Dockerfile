@@ -54,4 +54,5 @@ RUN chmod +x /tmp/auto_config.sh
 EXPOSE 9000
 
 # Run the script to configure the Wordpress and start the PHP
+CMD ["/usr/sbin/php-fpm7.4", "-F"]
 ENTRYPOINT ["/bin/bash", "/tmp/auto_config.sh"]

@@ -31,7 +31,7 @@ if mysqladmin ping -h mariadb --silent; then
 
 	chown -R www-data:www-data /var/www/html
 
-	/usr/sbin/php-fpm8.3 -F
+	/usr/sbin/php-fpm7.4 -F
 
 else
 	echo "MariaDB is not available. Exiting."
