@@ -5,8 +5,8 @@ LABEL org.opencontainers.image.authors="Hotaruban"
 # Set the arguments
 ARG MYSQL_USER
 ARG MYSQL_PASSWORD
-ARG MYSQL_DATABASE
 ARG MYSQL_ROOT_PASSWORD
+ARG MYSQL_DATABASE
 
 # Set the user to root to install the packages
 USER root
