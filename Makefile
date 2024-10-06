@@ -10,7 +10,8 @@ all: setup run
 setup:
 	@echo "Setting up the environment..."
 	@sudo mkdir -p $(WP_PATH) $(DB_PATH)
-	@sudo chown -R $(USER):$(USER) $(WP_PATH) $(DB_PATH)
+	@chown -R $(USER):$(USER) $(WP_PATH) $(DB_PATH)
+	@echo $(USER)
 
 run:
 	@echo "Running the services..."
