@@ -48,9 +48,6 @@ COPY ./tools/auto_config.sh /tmp/auto_config.sh
 # Change the permission of the script
 RUN chmod +x /tmp/auto_config.sh
 
-# Set the environment variable for the Wordpress
-WORKDIR /var/www/html/
-
 # Expose the port 9000 for information
 EXPOSE 9000
 
