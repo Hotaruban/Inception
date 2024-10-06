@@ -42,7 +42,7 @@ RUN mv /tmp/wp-cli.phar /usr/local/bin/wp
 RUN wp cli update
 
 # Copy the configuration file and the script to the container
-COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY ./tools/auto_config.sh /tmp/auto_config.sh
 
 WORKDIR /var/www/html
@@ -59,4 +59,4 @@ ENTRYPOINT ["/bin/bash", "/tmp/auto_config.sh"]
 EXPOSE 9000
 
 # Run the script to configure the Wordpress and start the PHP
-CMD ["/usr/sbin/php-fpm7.4", "-F"]
+CMD ["/usr/sbin/php-fpm8.2", "-F"]
