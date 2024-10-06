@@ -45,6 +45,8 @@ RUN wp cli update
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY ./tools/auto_config.sh /tmp/auto_config.sh
 
+WORKDIR /var/www/html
+
 # Change the permission of the script
 RUN chmod +x /tmp/auto_config.sh
 ENTRYPOINT ["/bin/bash", "/tmp/auto_config.sh"]
