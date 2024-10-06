@@ -23,10 +23,10 @@ RUN apt-get update && apt-get upgrade -y
 # Install Wordpress
 RUN apt-get install -y wget
 RUN mkdir -p /var/www/html
-RUN wget https://fr.wordpress.org/wordpress-6.6.2-fr_FR.tar.gz -P /var/www/html
-RUN tar -xvf /var/www/html/wordpress-6.6.2-fr_FR.tar.gz -C /var/www/html
+RUN wget https://wordpress.org/wordpress-6.6.2.tar.gz -P /var/www/html
+RUN tar -xvf /var/www/html/wordpress-6.6.2.tar.gz -C /var/www/html
 RUN mv /var/www/html/wordpress/* /var/www/html/
-RUN rm -rf /var/www/html/wordpress-6.6.2-fr_FR.tar.gz /var/www/html/wordpress
+RUN rm -rf /var/www/html/wordpress-6.6.2.tar.gz /var/www/html/wordpress
 RUN chown -R root:root /var/www/html
 
 # Install PHP
