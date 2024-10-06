@@ -47,7 +47,7 @@ services:
       - wordpress:/var/www/html
     depends_on:
       - wordpress
-    restart: on_failure
+    restart: always
     ports:
       - "443:443"
 
