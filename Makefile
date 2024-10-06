@@ -1,16 +1,15 @@
-DATA_PATH = /home/$(USER)/data/
-WP_PATH = $(DATA_PATH)/wordpress/
-DB_PATH = $(DATA_PATH)/mariadb/
+DATA_PATH := /home/$(USER)/data/
+WP_PATH := $(DATA_PATH)/wordpress/
+DB_PATH := $(DATA_PATH)/mariadb/
 
 ENV_PATH = ./srcs/.env
-COMPOSE_FILE = ./srcs/docker-compose.yml
+COMPOSE_FILE := ./srcs/docker-compose.yml
 
 all: setup run
 
 setup:
 	@echo "Setting up the environment..."
-	@sudo mkdir -p $(WP_PATH)
-	@sudo mkdir -p $(DB_PATH)
+	@sudo mkdir -p $(WP_PATH) $(DB_PATH)
 
 run:
 	@echo "Running the services..."
