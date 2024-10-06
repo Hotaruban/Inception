@@ -35,8 +35,8 @@ RUN rm -rf /root/tools
 VOLUME /var/lib/mysql
 
 # Clean the system and remove the cache
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
+#RUN apt-get clean
+#RUN rm -rf /var/lib/apt/lists/*
 
 # Expose the port 3306 for information
 EXPOSE 3306

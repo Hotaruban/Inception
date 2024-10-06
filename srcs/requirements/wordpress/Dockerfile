@@ -47,8 +47,8 @@ COPY ./tools/auto_config.sh /tmp/auto_config.sh
 RUN chmod +x /tmp/auto_config.sh
 
 # Clean the system and remove the cache
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
+#RUN apt-get clean
+#RUN rm -rf /var/lib/apt/lists/*
 
 # Expose the port 9000 for information
 EXPOSE 9000

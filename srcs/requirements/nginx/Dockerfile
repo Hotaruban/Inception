@@ -34,8 +34,8 @@ RUN openssl req -x509 -nodes -days 365\
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Clean the system and remove the cache
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
+#RUN apt-get clean
+#RUN rm -rf /var/lib/apt/lists/*
 
 # Expose the port 443 for information
 EXPOSE 443
