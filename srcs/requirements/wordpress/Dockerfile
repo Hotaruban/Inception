@@ -28,7 +28,7 @@ RUN rm -rf /var/www/wordpress-6.6.2.tar.gz
 RUN chown -R root:root /var/www/wordpress
 
 # Install PHP
-RUN apt-get install -y php7.4 \
+RUN apt-get install -y php \
 	php-fpm \
 	php-mysql \
 	mariadb-client
