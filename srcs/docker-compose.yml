@@ -30,7 +30,7 @@ services:
       - wordpress:/var/www/html
     depends_on:
       - mariadb
-    restart: on_failure
+    restart: always
     expose:
       - 9000
 
