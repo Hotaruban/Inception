@@ -29,9 +29,9 @@ RUN rm -rf /var/www/html/wordpress-6.6.2.tar.gz /var/www/html/wordpress
 RUN chown -R root:root /var/www/html
 
 # Install PHP
-RUN apt-get install -y php7.4 \
-	php7.4-fpm \
-	php7.4-mysql \
+RUN apt-get install -y php \
+	php-fpm \
+	php-mysql \
 	mariadb-client
 
 # Install WP-CLI
@@ -39,6 +39,8 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 RUN chmod +x /tmp/wp-cli.phar
 RUN mv /tmp/wp-cli.phar /usr/local/bin/wp
 RUN wp cli update
+
+RUN ls /etc/php/
 
 # Copy the configuration file and the script to the container
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
