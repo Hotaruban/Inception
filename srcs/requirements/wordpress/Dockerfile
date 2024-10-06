@@ -19,8 +19,6 @@ USER root
 
 # Update and upgrade the system and install the necessary packages
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
 
 # Install Wordpress
 RUN apt-get install -y wget
@@ -31,9 +29,9 @@ RUN chown -R root:root /var/www/html/wordpress
 
 # Install PHP
 RUN apt-get install -y php8.3\
-	php-fpm\
-	php-mysql\
-	mariadb-client
+php-fpm\
+php-mysql\
+mariadb-client
 
 # Install WP-CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp/
@@ -47,6 +45,10 @@ COPY ./tools/auto_config.sh /tmp/auto_config.sh
 
 # Change the permission of the script
 RUN chmod +x /tmp/auto_config.sh
+
+# Clean the system and remove the cache
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
 # Expose the port 9000 for information
 EXPOSE 9000

@@ -13,7 +13,6 @@ USER root
 
 # Update and upgrade the system
 RUN apt-get update && apt-get upgrade -y
-RUN rm -rf /var/lib/apt/lists/*
 
 # Install MariaDB
 RUN apt-get install mariadb-server -y
@@ -34,6 +33,10 @@ RUN rm -rf /root/tools
 
 # Define the volumes
 VOLUME /var/lib/mysql
+
+# Clean the system and remove the cache
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
 # Expose the port 3306 for information
 EXPOSE 3306
