@@ -22,13 +22,13 @@ RUN apt-get update && apt-get upgrade -y
 
 # Install Wordpress
 RUN apt-get install -y wget
-RUN wget https://wordpress.org/6.6.tar.gz -P /var/www/html/
-RUN tar -xvf /var/www/html/6.6.tar.gz -C /var/www/html/
-RUN rm -rf /var/www/html/6.6.tar.gz
+RUN wget https://wordpress.org/6.6.2.tar.gz -P /var/www/html/
+RUN tar -xvf /var/www/html/6.6.2.tar.gz -C /var/www/html/
+RUN rm -rf /var/www/html/6.6.2.tar.gz
 RUN chown -R root:root /var/www/html/wordpress
 
 # Install PHP
-RUN apt-get install -y php8.3\
+RUN apt-get install -y php7.4\
 php-fpm\
 php-mysql\
 mariadb-client
@@ -40,7 +40,7 @@ RUN mv /tmp/wp-cli.phar /usr/local/bin/wp
 RUN wp cli update
 
 # Copy the configuration file and the script to the container
-COPY ./conf/www.conf /etc/php/8.3/fpm/pool.d/www.conf
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY ./tools/auto_config.sh /tmp/auto_config.sh
 
 # Change the permission of the script
