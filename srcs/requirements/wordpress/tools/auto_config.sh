@@ -7,6 +7,7 @@ if mysqladmin ping -h mariadb --silent; then
 
 	# Auto config for wordpress
 	#wp core download --allow-root
+	touch /var/www/html/wp-config.php
 	wp language core install en_EN --allow-root
 	wp config create --allow-root \
 		--dbname=$MYSQL_DATABASE \
