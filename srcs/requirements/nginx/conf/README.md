@@ -4,14 +4,16 @@ Now that we have the Dockerfile, we need to create the configuration file to sta
 
 We'll begin with the events block, which contains general server options. There can only be one events block. For our project, there is no need to specify any options here.
 
-```events {
+```
+events {
 
 }
 ```
 
 Next, we add the http block, which is more important for configuring the specifics of an http server in Nginx.
 
-```events {
+```
+events {
 
 }
 
@@ -28,10 +30,10 @@ The default_type specifies the default file type as octet-stream, a general type
 
 Within this block, we add the server block. Multiple server blocks can exist, allowing Nginx to manage several sites simultaneously, defining how the server reacts based on different domains.
 
-```events {
+```
+events {
 
 }
-```
 
 http {
 	include /etc/nginx/mime.types;
@@ -47,7 +49,8 @@ In the server block, we add the necessary configurations as required by the proj
 
 Let's start with the SSL settings:
 
-```events {
+```
+events {
 
 }
 
@@ -70,7 +73,8 @@ ssl_protocols TLSv1.2 TLSv1.3; specifies the supported SSL protocols, keeping on
 ssl_certificate and ssl_certificate_key define the paths to the server's SSL certificate.
 Next, let's configure the server's root and server_name.
 
-```events {
+```
+events {
 
 }
 
@@ -96,7 +100,8 @@ server_name lists the domain names through which the server can be accessed.
 index sets the default page to open if no specific page is requested.
 We now add a location block to display a custom 404 error page for unknown requests.
 
-```events {
+```
+events {
 
 }
 
@@ -126,7 +131,8 @@ http {
 try_files first tries static files before returning the 404 error page.
 Let's now add another location block to access our WordPress site.
 
-```events {
+```
+events {
 
 }
 
@@ -173,7 +179,8 @@ fastcgi_param PATH_INFO includes any additional path information after the PHP s
 Finally, let's add the following directives to the server:
 
 
-```events {
+```
+events {
 
 }
 
