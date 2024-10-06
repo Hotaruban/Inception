@@ -24,13 +24,14 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y wget
 RUN wget https://wordpress.org/wordpress-6.6.2.tar.gz -P /var/www/html
 RUN tar -xvf /var/www/html/wordpress-6.6.2.tar.gz -C /var/www/html
-RUN rm -rf /var/www/html/wordpress-6.6.2.tar.gz
+RUN mv /var/www/html/wordpress/* /var/www/html/
+RUN rm -rf /var/www/html/wordpress-6.6.2.tar.gz /var/www/html/wordpress
 RUN chown -R root:root /var/www/html
 
 # Install PHP
-RUN apt-get install -y php \
-	php-fpm \
-	php-mysql \
+RUN apt-get install -y php7.4 \
+	php7.4-fpm \
+	php7.4-mysql \
 	mariadb-client
 
 # Install WP-CLI
@@ -45,6 +46,7 @@ COPY ./tools/auto_config.sh /tmp/auto_config.sh
 
 # Change the permission of the script
 RUN chmod +x /tmp/auto_config.sh
+ENTRYPOINT ["/bin/bash", "/tmp/auto_config.sh"]
 
 # Clean the system and remove the cache
 #RUN apt-get clean
@@ -55,4 +57,3 @@ EXPOSE 9000
 
 # Run the script to configure the Wordpress and start the PHP
 CMD ["/usr/sbin/php-fpm7.4", "-F"]
-ENTRYPOINT ["/bin/bash", "/tmp/auto_config.sh"]
