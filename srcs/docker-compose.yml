@@ -60,11 +60,11 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/$USER/data/mariadb
+      device: /home/hotaru/data/mariadb
       o: bind
   wordpress:
     driver: local
     driver_opts:
       type: none
-      device: /home/$USER/data/wordpress
+      device: /home/hotaru/data/wordpress
       o: bind
