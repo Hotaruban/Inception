@@ -14,7 +14,9 @@ setup:
 
 run:
 	@echo "Running the services..."
-	@sudo docker-compose --env-file $(ENV_PATH) -f $(COMPOSE_FILE) up --build -d
+	@sudo docker-compose --env-file $(ENV_PATH) -f $(COMPOSE_FILE) up --build -d && \
+	echo "Services are up and running." || \
+	echo "Error: Unable to run the services."
 
 stop:
 	@echo "Stopping the services..."
