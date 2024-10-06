@@ -11,36 +11,35 @@ setup:
 	@echo "Setting up the environment..."
 	@sudo mkdir -p $(WP_PATH) $(DB_PATH)
 	@chown -R $(USER):$(USER) $(WP_PATH) $(DB_PATH)
-	@echo $(USER)
 
 run:
 	@echo "Running the services..."
-	@sudo docker-compose --env-file $(ENV_PATH) -f $(COMPOSE_FILE) up --build -d
+	@docker-compose --env-file $(ENV_PATH) -f $(COMPOSE_FILE) up --build -d
 
 stop:
 	@echo "Stopping the services..."
-	@sudo docker-compose -f $(COMPOSE_FILE) down
+	@docker-compose -f $(COMPOSE_FILE) down
 
 restart: stop run
 
 list:
 	@echo "List of services running..."
-	@sudo docker ps
+	@docker ps
 
 volume:
 	@echo "List of volumes..."
-	@sudo docker volume ls
+	@docker volume ls
 
 clean:
 	@echo "Cleaning up the environment..."
-	@sudo docker-compose -f $(COMPOSE_FILE) down
-	@sudo rm -rf $(WP_PATH)
-	@sudo rm -rf $(DB_PATH)
+	@docker-compose -f $(COMPOSE_FILE) down
+	@rm -rf $(WP_PATH)
+	@rm -rf $(DB_PATH)
 
 re: clean all
 
 prune:
 	@echo "Pruning the environment..."
-	@sudo docker system prune -a
+	@docker system prune -a
 
 .PHONY: all setup run stop restart list volume clean re prune
