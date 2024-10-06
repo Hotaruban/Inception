@@ -12,7 +12,7 @@ services:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     restart: unless-stopped
     expose:
       - 3306
@@ -56,15 +56,15 @@ networks:
     driver: bridge
 
 volumes:
-  mariadb_data:
+  mariadb:
     driver: local
     driver_opts:
       type: none
-      device: /home/hotaru/data/mariadb
+      device: /home/$USER/data/mariadb
       o: bind
   wordpress:
     driver: local
     driver_opts:
       type: none
-      device: /home/hotaru/data/wordpress
+      device: /home/$USER/data/wordpress
       o: bind
