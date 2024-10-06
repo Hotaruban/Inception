@@ -1,6 +1,6 @@
 version: "2.29.2"
 
-service:
+services:
 
   mariadb:
     container_name: mariadb
@@ -56,7 +56,7 @@ networks:
     driver: bridge
 
 volumes:
-  mariadb:
+  mariadb_data:
     driver: local
     driver_opts:
       type: none
