@@ -34,8 +34,6 @@ volume:
 clean:
 	@echo "Cleaning up the environment..."
 	@sudo docker-compose -f $(COMPOSE_FILE) down
-	@sudo rm -rf $(WP_PATH)
-	@sudo rm -rf $(DB_PATH)
 	@sudo rm -rf $(DATA_PATH)
 
 re: clean all
