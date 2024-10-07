@@ -11,11 +11,11 @@ ARG MYSQL_DATABASE
 # Set the user to root to install the packages
 USER root
 
-# Update and upgrade the system
+# Update and upgrade the system and install the necessary packages
 RUN apt-get update && apt-get upgrade -y
-
-# Install MariaDB
 RUN apt-get install mariadb-server -y
+# Remove the cache
+RUN rm -rf /var/lib/apt/lists/*
 
 # Copy the configuration file and the script to the container
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
@@ -35,10 +35,6 @@ VOLUME /var/lib/mysql
 
 ENTRYPOINT ["/usr/local/bin/database.sh"]
 
-# Clean the system and remove the cache
-#RUN apt-get clean
-#RUN rm -rf /var/lib/apt/lists/*
-
 # Expose the port 3306 for information
 EXPOSE 3306
 
@@ -46,4 +42,4 @@ EXPOSE 3306
 USER mysql
 
 # Start the service
-CMD ["mysqld"]
+CMD ["mysqld", "--user=mysql", "--console"]
