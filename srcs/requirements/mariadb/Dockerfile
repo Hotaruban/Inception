@@ -23,7 +23,7 @@ COPY ./tools/ /usr/local/bin/
 
 # Run the script to create the database
 RUN chmod +x /usr/local/bin/database.sh
-#RUN /usr/local/bin/database.sh
+RUN /usr/local/bin/database.sh
 
 # Create directory with correct permissions and ownership for socket
 RUN mkdir -p /var/run/mysqld
@@ -33,7 +33,7 @@ RUN chmod 777 /var/run/mysqld
 # Define the volumes
 VOLUME /var/lib/mysql
 
-ENTRYPOINT ["/usr/local/bin/database.sh"]
+#ENTRYPOINT ["/usr/local/bin/database.sh"]
 
 # Expose the port 3306 for information
 EXPOSE 3306
