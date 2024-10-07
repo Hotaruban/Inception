@@ -33,5 +33,6 @@ if mysqladmin ping -h mariadb --silent; then
 
 else
 	echo "MariaDB is not available. Exiting."
+	sleep 5
 	exit 1
 fi
