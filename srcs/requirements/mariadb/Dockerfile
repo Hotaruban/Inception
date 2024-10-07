@@ -34,15 +34,18 @@ VOLUME /var/lib/mysql
 EXPOSE 3306
 
 # Copy and set up the initialization script
-COPY ./tools/database.sh /docker-entrypoint-initdb.d/
-RUN chmod +x /docker-entrypoint-initdb.d/database.sh
+#COPY ./tools/database.sh /docker-entrypoint-initdb.d/
+#RUN chmod +x /docker-entrypoint-initdb.d/database.sh
 
 # Use an entrypoint script to initialize the database and start MariaDB
-COPY ./tools/docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+#COPY ./tools/docker-entrypoint.sh /usr/local/bin/
+#RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+COPY ./tools/database.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/database.sh
 
 # Execute the script in docker-entrypoint-initdb.d
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["database.sh"]
 
 # Start the service
 CMD ["mysqld"]
