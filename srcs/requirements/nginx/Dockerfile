@@ -1,4 +1,5 @@
 FROM debian:bookworm
+
 # Set the metadata for the image an author
 LABEL org.opencontainers.image.authors="Hotaruban"
 
@@ -11,20 +12,20 @@ RUN apt-get install openssl -y
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
 
-# create a directory for storing the ssl certificate and the private key
-RUN mkdir -p /etc/nginx/ssl
 
-# the option -nodes is used to create a private key without a passphrase
-# the option -x509 is used to create a self-signed certificate
-# the option -out is used to specify the output file for the certificate
-# the option -keyout is used to specify the output file for the private key
-# the option -subj is used to specify the subject of the certificate
+# Create a directory for storing the ssl certificate and the private key
+	# the option -nodes is used to create a private key without a passphrase
+	# the option -x509 is used to create a self-signed certificate
+	# the option -out is used to specify the output file for the certificate
+	# the option -keyout is used to specify the output file for the private key
+	# the option -subj is used to specify the subject of the certificate
 		#/C=TH : Country
 		#/ST=Bangkok : State
 		#/L=Bangkok : Locality
 		#/O=MyCompany : Organisation (Company)
 		#/OU=IT : Organisation unit (IT department)
 		#/CN=mycompany.com : Common Name (domain name)
+RUN mkdir -p /etc/nginx/ssl
 RUN openssl req -x509 -nodes -days 365\
 	-out /etc/nginx/ssl/jhurpy.42.fr.crt\
 	-keyout /etc/nginx/ssl/jhurpy.42.fr.key\
