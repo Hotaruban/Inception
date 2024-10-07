@@ -10,18 +10,18 @@ if mysqladmin ping -h mariadb --silent; then
 	#wp core download --allow-root
 	#touch /var/www/html/wp-config.php
 	#wp language core install en_EN --allow-root
-	#wp config create --allow-root \
-	#	--dbname=$MYSQL_DATABASE \
-	#	--dbuser=$MYSQL_USER \
-	#	--dbpass=$MYSQL_PASSWORD \
-	#	--dbhost=mariadb:3306 \
-	#	--path=/var/www/html
+	wp config create --allow-root \
+		--dbname=$MYSQL_DATABASE \
+		--dbuser=$MYSQL_USER \
+		--dbpass=$MYSQL_PASSWORD \
+		--dbhost=mariadb:3306 \
+		--path=/var/www/html
 
-	sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
-	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config-sample.php
-	sed -i "s/localhost/$MYSQL_HOSTNAME/g" wp-config-sample.php
-	sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config-sample.php
-	cp wp-config-sample.php wp-config.php
+	#sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
+	#sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config-sample.php
+	#sed -i "s/localhost/$MYSQL_HOSTNAME/g" wp-config-sample.php
+	#sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config-sample.php
+	#cp wp-config-sample.php wp-config.php
 
 	#wp site switch-language en_EN --allow-root --path=/var/www/html
 
