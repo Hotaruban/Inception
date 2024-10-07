@@ -26,6 +26,9 @@ COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN mkdir -p /var/run/mysqld && \
 	chown -R mysql:mysql /var/run/mysqld && \
 	chmod 777 /var/run/mysqld
+	
+COPY ./tools/database.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/database.sh
 
 # Define the volumes
 VOLUME /var/lib/mysql
@@ -33,25 +36,8 @@ VOLUME /var/lib/mysql
 # Expose the port 3306 for information
 EXPOSE 3306
 
-
-# Use an entrypoint script to initialize the database and start MariaDB
-#COPY ./tools/docker-entrypoint.sh /usr/local/bin/
-#RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-
 # Execute the script
-#RUN /usr/local/bin/database.sh
-#ENTRYPOINT ["/docker-entrypoint-initdb.d/database.sh"]
-
-# Copy and set up the initialization script
-COPY ./tools/database.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/database.sh
-#RUN /usr/local/bin/database.sh
-
-#COPY ./tools/database.sh /docker-entrypoint-initdb.d/
-#RUN chmod +x /docker-entrypoint-initdb.d/database.sh
 
 # Start the service
 CMD ["sh", "-c", "mysqld & sleep 10; /usr/local/bin/database.sh; wait"]
 
-#CMD ["/usr/local/bin/database.sh"]

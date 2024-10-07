@@ -1,12 +1,6 @@
 #!/bin/bash
 
-
 sleep 10
-
-#MYSQL_ROOT_PASSWORD="42root"
-#MYSQL_DATABASE=wordpress
-#MYSQL_PASSWORD=42userjdg
-#MYSQL_USER=userjdg
 
 # secure the installation
 mariadb -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
@@ -32,8 +26,6 @@ CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
 FLUSH PRIVILEGES;
 EOF
-
-echo "Database initialization completed."
 
 # test the database
 #echo "SHOW DATABASES"
