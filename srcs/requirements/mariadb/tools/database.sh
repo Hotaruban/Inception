@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # script to create the database and the user
-while ! mysqladmin ping -h"localhost" --silent; do
-	sleep 1
-done
+#while ! mysqladmin ping -h"localhost" --silent; do
+#	sleep 1
+#done
 
-#sleep 10
+sleep 10
 
 #/etc/init.d/mariadb start
 

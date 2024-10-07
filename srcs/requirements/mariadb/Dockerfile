@@ -44,11 +44,12 @@ EXPOSE 3306
 #ENTRYPOINT ["/docker-entrypoint-initdb.d/database.sh"]
 
 # Copy and set up the initialization script
-#COPY ./tools/database.sh /usr/local/bin/
-#RUN chmod +x /usr/local/bin/database.sh
+COPY ./tools/database.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/database.sh
+RUN /usr/local/bin/database.sh
 
-COPY ./tools/database.sh /docker-entrypoint-initdb.d/
-RUN chmod +x /docker-entrypoint-initdb.d/database.sh
+#COPY ./tools/database.sh /docker-entrypoint-initdb.d/
+#RUN chmod +x /docker-entrypoint-initdb.d/database.sh
 
 # Start the service
 ENTRYPOINT ["mysqld"]
