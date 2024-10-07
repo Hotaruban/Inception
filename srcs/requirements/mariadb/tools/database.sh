@@ -4,7 +4,7 @@
 
 #mysql_install_db
 
-/etc/init.d/mysql start
+/etc/init.d/mariadb start
 
 # secure the installation
 mysql_secure_installation<<EOF
@@ -26,7 +26,7 @@ EOF
 #GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION;
 #FLUSH PRIVILEGES;
 
-mysql -u root <<EOF
+mariadb -u root -p$MYSQL_ROOT_PASSWORD<<EOF
 CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
 CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
@@ -36,4 +36,4 @@ EOF
 #mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < /tmp/wordpress.sql
 
 # stop the service
-/etc/init.d/mysql stop
+/etc/init.d/mariadb stop
