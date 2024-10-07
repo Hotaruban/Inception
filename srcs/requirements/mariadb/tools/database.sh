@@ -35,4 +35,4 @@ EOF
 #mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < /tmp/wordpress.sql
 
 # stop the service
-/etc/init.d/mysql stop
+#/etc/init.d/mysql stop
