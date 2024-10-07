@@ -1,9 +1,9 @@
 #!/bin/bash
 
-## script to create the database and the user
-while ! mysqladmin ping -h"localhost" --silent; do
-    sleep 1
-done
+# script to create the database and the user
+#while ! mysqladmin ping -h"localhost" --silent; do
+#    sleep 1
+#done
 
 #MYSQL_ROOT_PASSWORD="42root"
 #MYSQL_DATABASE=wordpress
