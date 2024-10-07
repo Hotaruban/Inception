@@ -1,13 +1,7 @@
 #!/bin/bash
 
-# script to create the database and the user
-#while ! mysqladmin ping -h"localhost" --silent; do
-#	sleep 1
-#done
 
 sleep 10
-
-/etc/init.d/mariadb start
 
 #MYSQL_ROOT_PASSWORD="42root"
 #MYSQL_DATABASE=wordpress
@@ -48,5 +42,3 @@ echo "Database initialization completed."
 #mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT User FROM mysql.user;"
 #echo "SHOW GRANTS"
 #mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "SHOW GRANTS FOR '$MYSQL_USER'@'%';"
-
-#/etc/init.d/mariadb stop

@@ -52,6 +52,6 @@ RUN /usr/local/bin/database.sh
 #RUN chmod +x /docker-entrypoint-initdb.d/database.sh
 
 # Start the service
-ENTRYPOINT ["mysqld"]
+CMD ["sh", "-c", "mysqld & sleep 10; /usr/local/bin/database.sh; wait"]
 
 #CMD ["/usr/local/bin/database.sh"]
