@@ -11,7 +11,7 @@ setup:
 	@echo "Setting up the environment..."
 	@sudo mkdir -p $(WP_PATH) $(DB_PATH)
 
-run:
+run: setup
 	@echo "Running the services..."
 	@docker-compose --env-file $(ENV_PATH) -f $(COMPOSE_FILE) up --build -d && \
 	echo "Services are up and running." || \
@@ -25,7 +25,7 @@ restart: stop run
 
 list:
 	@echo "List of services running..."
-	@sudo docker ps
+	@sudo docker ps -a
 
 volume:
 	@echo "List of volumes..."
@@ -38,9 +38,15 @@ clean:
 
 re: clean all
 
-#ultra: docker stop $(docker ps -qa); docker rm
-#		$(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker
-#		network rm $(docker network ls -q) 2>/dev/null"
+ultra:
+	@echo "Cleaning up the environment..."
+	@sudo docker-compose -f $(COMPOSE_FILE) down
+	@sudo docker stop $(docker ps -qa) 2>/dev/null || true
+	@sudo docker rm $(docker ps -qa) 2>/dev/null || true
+	@sudo docker rmi -f $(docker images -qa) 2>/dev/null || true
+	@sudo docker volume rm $(docker volume ls -q) 2>/dev/null || true
+	@sudo docker network rm $(docker network ls -q) 2>/dev/null || true
+	@sudo rm -rf $(DATA_PATH)
 
 prune:
 	@echo "Pruning the environment..."
