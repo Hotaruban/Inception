@@ -1,4 +1,5 @@
 FROM debian:bookworm
+
 # Set the metadata for the image an author
 LABEL org.opencontainers.image.authors="Hotaruban"
 
@@ -12,31 +13,39 @@ ARG MYSQL_DATABASE
 USER root
 
 # Update and upgrade the system and install the necessary packages
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install mariadb-server -y
-# Remove the cache
-RUN rm -rf /var/lib/apt/lists/*
+# Clean the system and remove the cache
+RUN apt-get update && apt-get upgrade -y && \
+	apt-get install -y mariadb-server && \
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/*
 
 # Copy the configuration file and the script to the container
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY ./tools/database.sh /usr/local/bin/
 
-# Run the script to create the database
-RUN chmod +x /usr/local/bin/database.sh
-
-# Create directory with correct permissions and ownership for socket
-RUN mkdir -p /var/run/mysqld
-RUN chown -R mysql:mysql /var/run/mysqld
-RUN chmod 777 /var/run/mysqld
+# Create directory for MySQL socket with correct permissions
+RUN mkdir -p /var/run/mysqld && \
+	chown -R mysql:mysql /var/run/mysqld && \
+	chmod 777 /var/run/mysqld
 
 # Define the volumes
 VOLUME /var/lib/mysql
 
+# Run the script to create the database
+RUN chmod +x /usr/local/bin/database.sh
+
 # Expose the port 3306 for information
 EXPOSE 3306
 
-# Set the user to mysql to run the service for security reasons
-#USER mysql
+# Copy and set up the initialization script
+COPY ./tools/database.sh /docker-entrypoint-initdb.d/
+RUN chmod +x /docker-entrypoint-initdb.d/database.sh
+
+# Use an entrypoint script to initialize the database and start MariaDB
+COPY ./tools/docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Execute the script in docker-entrypoint-initdb.d
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 # Start the service
-CMD ["sh", "-c", "mysqld & sleep 10; /usr/local/bin/database.sh; wait"]
+CMD ["mysqld"]

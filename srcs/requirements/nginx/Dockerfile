@@ -4,14 +4,11 @@ FROM debian:bookworm
 LABEL org.opencontainers.image.authors="Hotaruban"
 
 # update, upgrade and install nginx and openssl
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install nginx -y
-RUN apt-get install openssl -y
-
+RUN apt-get update && apt-get upgrade -y &&\
+	apt-get install -y nginx openssl
+	
 # Clean the system and remove the cache
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
-
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create a directory for storing the ssl certificate and the private key
 	# the option -nodes is used to create a private key without a passphrase
@@ -25,8 +22,8 @@ RUN rm -rf /var/lib/apt/lists/*
 		#/O=MyCompany : Organisation (Company)
 		#/OU=IT : Organisation unit (IT department)
 		#/CN=mycompany.com : Common Name (domain name)
-RUN mkdir -p /etc/nginx/ssl
-RUN openssl req -x509 -nodes -days 365\
+RUN mkdir -p /etc/nginx/ssl &&\
+	openssl req -x509 -nodes -days 365\
 	-out /etc/nginx/ssl/jhurpy.42.fr.crt\
 	-keyout /etc/nginx/ssl/jhurpy.42.fr.key\
 	-subj "/C=TH/ST=Bangkok/L=Bangkok/O=42BKK/OU=42/CN=jhurpy.42.fr"
