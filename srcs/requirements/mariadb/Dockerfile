@@ -28,8 +28,8 @@ RUN mkdir -p /var/run/mysqld && \
 	chmod 777 /var/run/mysqld
 
 # Copy the script to the container and set the permissions
-COPY ./tools/database.sh /usr/local/bin/ && \
-		./tools/init-db.sh /usr/local/bin/
+COPY ./tools/database.sh /usr/local/bin/
+COPY ./tools/init-db.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/database.sh && \
 		chmod +x /usr/local/bin/init-db.sh
 
