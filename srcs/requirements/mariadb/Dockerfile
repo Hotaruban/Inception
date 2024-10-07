@@ -31,7 +31,7 @@ COPY ./tools/database.sh /root/tools/
 RUN chmod +x /root/tools/database.sh
 
 # Execute the script
-RUN /root/tools/database.sh
+#RUN /root/tools/database.sh
 
 # Define the volumes
 VOLUME /var/lib/mysql
@@ -40,5 +40,5 @@ VOLUME /var/lib/mysql
 EXPOSE 3306
 
 # Start the service
-#CMD ["sh", "-c", "mysqld & sleep 10; /usr/local/bin/database.sh; wait"]
-CMD ["mysqld"]
+CMD ["sh", "-c", "mysqld & sleep 10; /root/tools/database.sh; wait"]
+#CMD ["mysqld"]
