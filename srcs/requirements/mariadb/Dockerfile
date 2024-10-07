@@ -30,9 +30,6 @@ RUN mkdir -p /var/run/mysqld && \
 # Define the volumes
 VOLUME /var/lib/mysql
 
-# Run the script to create the database
-RUN chmod +x /usr/local/bin/database.sh
-
 # Expose the port 3306 for information
 EXPOSE 3306
 
