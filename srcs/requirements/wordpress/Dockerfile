@@ -33,7 +33,7 @@ RUN wget https://wordpress.org/wordpress-6.6.2.tar.gz -P /var/www/html
 RUN tar -xvf /var/www/html/wordpress-6.6.2.tar.gz -C /var/www/html
 RUN mv /var/www/html/wordpress/* /var/www/html/
 RUN rm -rf /var/www/html/wordpress-6.6.2.tar.gz /var/www/html/wordpress
-#RUN chown -R www-data:www-data /var/www/html
+RUN chown -R root:root /var/www/html
 
 # Install PHP
 RUN apt-get install -y php \
@@ -51,7 +51,7 @@ RUN wp cli update
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 COPY ./tools/auto_config.sh /tmp/auto_config.sh
 
-#WORKDIR /var/www/html
+WORKDIR /var/www/html
 
 # Change the permission of the script
 RUN chmod +x /tmp/auto_config.sh
