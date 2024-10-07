@@ -7,7 +7,7 @@
 
 sleep 10
 
-#/etc/init.d/mariadb start
+/etc/init.d/mariadb start
 
 #MYSQL_ROOT_PASSWORD="42root"
 #MYSQL_DATABASE=wordpress
