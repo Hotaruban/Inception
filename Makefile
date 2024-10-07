@@ -34,13 +34,6 @@ volume:
 clean:
 	@echo "Cleaning up the environment..."
 	@sudo docker-compose -f $(COMPOSE_FILE) down
-	@sudo rm -rf $(DATA_PATH)
-
-re: clean all
-
-ultra:
-	@echo "Cleaning up the environment..."
-	@sudo docker-compose -f $(COMPOSE_FILE) down
 	@sudo docker stop $(docker ps -qa) 2>/dev/null || true
 	@sudo docker rm $(docker ps -qa) 2>/dev/null || true
 	@sudo docker rmi -f $(docker images -qa) 2>/dev/null || true
@@ -52,4 +45,4 @@ prune:
 	@echo "Pruning the environment..."
 	@sudo docker system prune -a
 
-.PHONY: all setup run stop restart list volume clean re ultra prune
+.PHONY: setup run restart list volume clean prune
