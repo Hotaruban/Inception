@@ -29,13 +29,14 @@ RUN mkdir -p /var/run/mysqld && \
 
 COPY ./tools/database.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/database.sh
-RUN /usr/local/bin/database.sh
+#RUN /usr/local/bin/database.sh
 
 #COPY ./tools/database.sh /root/tools/
 #RUN chmod +x /root/tools/database.sh
 #RUN /root/tools/database.sh
 
-# Execute the script
+COPY ./tools/init-db.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/init-db.sh
 
 # Define the volumes
 VOLUME /var/lib/mysql
@@ -43,7 +44,9 @@ VOLUME /var/lib/mysql
 # Expose the port 3306 for information
 EXPOSE 3306
 
+ENTRYPOINT [ "/usr/local/bin/init-db.sh" ]
+
 # Start the service
-CMD ["sh", "-c", "mysqld & sleep 10; /usr/local/bin/database.sh; wait"]
+#CMD ["sh", "-c", "mysqld & sleep 10; /usr/local/bin/database.sh; wait"]
 #CMD ["sh", "-c", "mysqld & sleep 10; /root/tools/database.sh; wait"]
 #CMD ["mysqld"]
