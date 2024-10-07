@@ -14,6 +14,12 @@ ARG WORDPRESS_USER
 ARG WORDPRESS_USER_EMAIL
 ARG WORDPRESS_USER_PASSWORD
 
+# Set the environment variable for the database
+ARG MYSQL_USER
+ARG MYSQL_PASSWORD
+ARG MYSQL_ROOT_PASSWORD
+ARG MYSQL_DATABASE
+
 # Use the root user to run the following commands
 USER root
 
