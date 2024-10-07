@@ -47,4 +47,4 @@ echo "Database initialization completed."
 #echo "SHOW GRANTS"
 #mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "SHOW GRANTS FOR '$MYSQL_USER'@'%';"
 
-/etc/init.d/mariadb stop
+#/etc/init.d/mariadb stop
