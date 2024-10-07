@@ -1,17 +1,17 @@
 ##!/bin/bash
-set -e
+#set -e
 
-MAX_TRIES=30
-COUNTER=0
+#MAX_TRIES=30
+#COUNTER=0
 
-while ! mysqladmin ping -h"localhost" --silent; do
-	sleep 1
-	COUNTER=$((COUNTER+1))
-	if [ $COUNTER -ge $MAX_TRIES ]; then
-		echo "Impossible to connect to MySQL, after $MAX_TRIES tries."
-		exit 1
-	fi
-done
+#while ! mysqladmin ping -h"localhost" --silent; do
+#	sleep 1
+#	COUNTER=$((COUNTER+1))
+#	if [ $COUNTER -ge $MAX_TRIES ]; then
+#		echo "Impossible to connect to MySQL, after $MAX_TRIES tries."
+#		exit 1
+#	fi
+#done
 
 echo "MySQL is ready."
 
