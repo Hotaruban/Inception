@@ -2,17 +2,17 @@ FROM debian:bookworm
 # Set the metadata for the image an author
 LABEL org.opencontainers.image.authors="Hotaruban"
 
-# update and upgrade the system
+# update, upgrade and install nginx and openssl
 RUN apt-get update && apt-get upgrade -y
-
-# install nginx
 RUN apt-get install nginx -y
+RUN apt-get install openssl -y
+
+# Clean the system and remove the cache
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 
 # create a directory for storing the ssl certificate and the private key
 RUN mkdir -p /etc/nginx/ssl
-
-# install openssl
-RUN apt-get install openssl -y
 
 # the option -nodes is used to create a private key without a passphrase
 # the option -x509 is used to create a self-signed certificate
@@ -32,10 +32,6 @@ RUN openssl req -x509 -nodes -days 365\
 
 # copy our configuration file of nginx to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-
-# Clean the system and remove the cache
-#RUN apt-get clean
-#RUN rm -rf /var/lib/apt/lists/*
 
 # Expose the port 443 for information
 EXPOSE 443
