@@ -5,6 +5,8 @@
 #    sleep 1
 #done
 
+/etc/init.d/mariadb start
+
 #MYSQL_ROOT_PASSWORD="42root"
 #MYSQL_DATABASE=wordpress
 #MYSQL_PASSWORD=42userjdg
@@ -45,3 +47,4 @@ echo "Database initialization completed."
 #echo "SHOW GRANTS"
 #mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "SHOW GRANTS FOR '$MYSQL_USER'@'%';"
 
+/etc/init.d/mariadb stop
