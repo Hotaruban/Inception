@@ -36,7 +36,7 @@ VOLUME /var/lib/mysql
 EXPOSE 3306
 
 # Set the user to mysql to run the service for security reasons
-USER mysql
+#USER mysql
 
 # Start the service
 CMD ["sh", "-c", "mysqld & sleep 10; /usr/local/bin/database.sh; wait"]
