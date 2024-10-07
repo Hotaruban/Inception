@@ -55,7 +55,7 @@
 #!/bin/bash
 
 #sleep 10
-if [-f /var/www/html/wp-config.php]; then
+if [ -f /var/www/html/wp-config.php ]; then
 	echo "-- wp-config.php -- WordPress is already -- Exiting. --"
 	#exit 0
 fi
