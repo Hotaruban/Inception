@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sleep 10
-
 # secure the installation
 mariadb -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
 
