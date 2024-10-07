@@ -44,8 +44,8 @@ EXPOSE 3306
 COPY ./tools/database.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/database.sh
 
-# Execute the script in docker-entrypoint-initdb.d
-ENTRYPOINT ["database.sh"]
+# Execute the script
+ENTRYPOINT ["/usr/local/bin/database.sh"]
 
 # Start the service
 CMD ["mysqld"]
