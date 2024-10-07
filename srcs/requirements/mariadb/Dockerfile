@@ -4,10 +4,10 @@ FROM debian:bookworm
 LABEL org.opencontainers.image.authors="Hotaruban"
 
 # Set the arguments
-ARG MYSQL_USER
-ARG MYSQL_PASSWORD
-ARG MYSQL_ROOT_PASSWORD
-ARG MYSQL_DATABASE
+ENV MYSQL_USER=$(MYSQL_USER)
+ENV MYSQL_PASSWORD=$(MYSQL_PASSWORD)
+ENV MYSQL_ROOT_PASSWORD=$(MYSQL_ROOT_PASSWORD)
+ENV MYSQL_DATABASE=$(MYSQL_DATABASE)
 
 # Set the user to root to install the packages
 USER root
@@ -41,11 +41,11 @@ EXPOSE 3306
 #COPY ./tools/docker-entrypoint.sh /usr/local/bin/
 #RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-COPY ./tools/database.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/database.sh
+COPY ./tools/database.sh /docker-entrypoint-initdb.d/
+RUN chmod +x /docker-entrypoint-initdb.d/database.sh
 
 # Execute the script
-ENTRYPOINT ["/usr/local/bin/database.sh"]
+ENTRYPOINT ["/docker-entrypoint-initdb.d/database.sh"]
 
 # Start the service
 CMD ["mysqld"]
