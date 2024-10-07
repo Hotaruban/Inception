@@ -39,8 +39,12 @@ clean:
 
 re: clean all
 
+#ultra: docker stop $(docker ps -qa); docker rm
+#		$(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker
+#		network rm $(docker network ls -q) 2>/dev/null"
+
 prune:
 	@echo "Pruning the environment..."
 	@sudo docker system prune -a
 
-.PHONY: all setup run stop restart list volume clean re prune
+.PHONY: all setup run stop restart list volume clean re ultra prune
