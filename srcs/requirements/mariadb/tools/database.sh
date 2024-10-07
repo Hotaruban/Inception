@@ -8,6 +8,7 @@
 
 # secure the installation
 mysql_secure_installation<<EOF
+n
 y
 $MYSQL_ROOT_PASSWORD
 $MYSQL_ROOT_PASSWORD

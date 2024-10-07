@@ -19,7 +19,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 # Copy the configuration file and the script to the container
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY ./tools/ /usr/local/bin/
+COPY ./tools/database.sh /usr/local/bin/
 
 # Run the script to create the database
 RUN chmod +x /usr/local/bin/database.sh
