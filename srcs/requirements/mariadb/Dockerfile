@@ -19,12 +19,11 @@ RUN apt-get install mariadb-server -y
 
 # Copy the configuration file and the script to the container
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY ./tools/ /root/tools/
+COPY ./tools/ /usr/local/bin/
 
 # Run the script to create the database
-RUN chmod +x /root/tools/database.sh
-RUN /root/tools/database.sh
-RUN rm -rf /root/tools
+RUN chmod +x /usr/local/bin/database.sh
+#RUN /usr/local/bin/database.sh
 
 # Create directory with correct permissions and ownership for socket
 RUN mkdir -p /var/run/mysqld
@@ -33,6 +32,8 @@ RUN chmod 777 /var/run/mysqld
 
 # Define the volumes
 VOLUME /var/lib/mysql
+
+ENTRYPOINT ["/usr/local/bin/database.sh"]
 
 # Clean the system and remove the cache
 #RUN apt-get clean
@@ -45,4 +46,4 @@ EXPOSE 3306
 USER mysql
 
 # Start the service
-ENTRYPOINT ["mysqld"]
+CMD ["mysqld"]
