@@ -27,8 +27,11 @@ RUN mkdir -p /var/run/mysqld && \
 	chown -R mysql:mysql /var/run/mysqld && \
 	chmod 777 /var/run/mysqld
 
-COPY ./tools/database.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/database.sh
+#COPY ./tools/database.sh /usr/local/bin/
+#RUN chmod +x /usr/local/bin/database.sh
+
+COPY ./tools/database.sh /root/tools/
+RUN chmod +x /root/tools/database.sh
 
 # Execute the script
 #RUN /root/tools/database.sh
@@ -40,5 +43,6 @@ VOLUME /var/lib/mysql
 EXPOSE 3306
 
 # Start the service
-CMD ["sh", "-c", "mysqld & sleep 10; /usr/local/bin/database.sh; wait"]
+#CMD ["sh", "-c", "mysqld & sleep 10; /usr/local/bin/database.sh; wait"]
+CMD ["sh", "-c", "mysqld & sleep 10; /root/tools/database.sh; wait"]
 #CMD ["mysqld"]
