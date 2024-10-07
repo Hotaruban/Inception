@@ -1,68 +1,128 @@
 FROM debian:bookworm
-# Set the metadata for the image an author
+
+# Set the metadata for the image
 LABEL org.opencontainers.image.authors="Hotaruban"
 
-# Set the environment variable for the Wordpress
+# Arguments for the Wordpress
 ARG WORDPRESS_URL
 ARG WORDPRESS_TITLE
 ARG WORDPRESS_ADMIN_USER
 ARG WORDPRESS_ADMIN_PASSWORD
 ARG WORDPRESS_ADMIN_EMAIL
-
-# Set the environment variable for first user
 ARG WORDPRESS_USER
 ARG WORDPRESS_USER_EMAIL
 ARG WORDPRESS_USER_PASSWORD
-
-# Set the environment variable for the database
 ARG MYSQL_USER
 ARG MYSQL_PASSWORD
 ARG MYSQL_ROOT_PASSWORD
 ARG MYSQL_DATABASE
+ARG MYSQL_HOSTNAME
 
 # Use the root user to run the following commands
 USER root
 
 # Update and upgrade the system and install the necessary packages
-RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && apt-get upgrade -y && \
+	apt-get install -y wget php php-fpm php-mysql mariadb-client && \
+	rm -rf /var/lib/apt/lists/*
 
 # Install Wordpress
-RUN apt-get install -y wget
-RUN mkdir -p /var/www/html
-RUN wget https://wordpress.org/wordpress-6.6.2.tar.gz -P /var/www/html
-RUN tar -xvf /var/www/html/wordpress-6.6.2.tar.gz -C /var/www/html
-RUN mv /var/www/html/wordpress/* /var/www/html/
-RUN rm -rf /var/www/html/wordpress-6.6.2.tar.gz /var/www/html/wordpress
-RUN chown -R root:root /var/www/html
-
-# Install PHP
-RUN apt-get install -y php \
-	php-fpm \
-	php-mysql \
-	mariadb-client
+RUN wget https://wordpress.org/wordpress-6.6.2.tar.gz -P /tmp && \
+	tar -xvf /tmp/wordpress-6.6.2.tar.gz -C /var/www/html && \
+	mv /var/www/html/wordpress/* /var/www/html/ && \
+	rm -rf /tmp/wordpress-6.6.2.tar.gz /var/www/html/wordpress && \
+	chown -R www-data:www-data /var/www/html
 
 # Install WP-CLI
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp/
-RUN chmod +x /tmp/wp-cli.phar
-RUN mv /tmp/wp-cli.phar /usr/local/bin/wp
-RUN wp cli update
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp/ && \
+	chmod +x /tmp/wp-cli.phar && mv /tmp/wp-cli.phar /usr/local/bin/wp
 
 # Copy the configuration file and the script to the container
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
-COPY ./tools/auto_config.sh /tmp/auto_config.sh
+COPY ./tools/auto_config.sh /usr/local/bin/auto_config.sh
 
+# Give the permission to the script
+RUN chmod +x /usr/local/bin/auto_config.sh
+
+# Define the working directory
 WORKDIR /var/www/html
-
-# Change the permission of the script
-RUN chmod +x /tmp/auto_config.sh
-ENTRYPOINT ["/bin/bash", "/tmp/auto_config.sh"]
-
-# Clean the system and remove the cache
-#RUN apt-get clean
-#RUN rm -rf /var/lib/apt/lists/*
 
 # Expose the port 9000 for information
 EXPOSE 9000
 
-# Run the script to configure the Wordpress and start the PHP
+# Entrypoint and command to run the script and start the PHP
+ENTRYPOINT ["/bin/bash", "/usr/local/bin/auto_config.sh"]
+
 CMD ["/usr/sbin/php-fpm8.2", "-F"]
+
+
+
+
+#FROM debian:bookworm
+## Set the metadata for the image an author
+#LABEL org.opencontainers.image.authors="Hotaruban"
+
+## Set the environment variable for the Wordpress
+#ARG WORDPRESS_URL
+#ARG WORDPRESS_TITLE
+#ARG WORDPRESS_ADMIN_USER
+#ARG WORDPRESS_ADMIN_PASSWORD
+#ARG WORDPRESS_ADMIN_EMAIL
+
+## Set the environment variable for first user
+#ARG WORDPRESS_USER
+#ARG WORDPRESS_USER_EMAIL
+#ARG WORDPRESS_USER_PASSWORD
+
+## Set the environment variable for the database
+#ARG MYSQL_USER
+#ARG MYSQL_PASSWORD
+#ARG MYSQL_ROOT_PASSWORD
+#ARG MYSQL_DATABASE
+
+## Use the root user to run the following commands
+#USER root
+
+## Update and upgrade the system and install the necessary packages
+#RUN apt-get update && apt-get upgrade -y
+
+## Install Wordpress
+#RUN apt-get install -y wget
+#RUN mkdir -p /var/www/html
+#RUN wget https://wordpress.org/wordpress-6.6.2.tar.gz -P /var/www/html
+#RUN tar -xvf /var/www/html/wordpress-6.6.2.tar.gz -C /var/www/html
+#RUN mv /var/www/html/wordpress/* /var/www/html/
+#RUN rm -rf /var/www/html/wordpress-6.6.2.tar.gz /var/www/html/wordpress
+#RUN chown -R root:root /var/www/html
+
+## Install PHP
+#RUN apt-get install -y php \
+#	php-fpm \
+#	php-mysql \
+#	mariadb-client
+
+## Install WP-CLI
+#RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P /tmp/
+#RUN chmod +x /tmp/wp-cli.phar
+#RUN mv /tmp/wp-cli.phar /usr/local/bin/wp
+#RUN wp cli update
+
+## Copy the configuration file and the script to the container
+#COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
+#COPY ./tools/auto_config.sh /tmp/auto_config.sh
+
+#WORKDIR /var/www/html
+
+## Change the permission of the script
+#RUN chmod +x /tmp/auto_config.sh
+#ENTRYPOINT ["/bin/bash", "/tmp/auto_config.sh"]
+
+## Clean the system and remove the cache
+##RUN apt-get clean
+##RUN rm -rf /var/lib/apt/lists/*
+
+## Expose the port 9000 for information
+#EXPOSE 9000
+
+## Run the script to configure the Wordpress and start the PHP
+#CMD ["/usr/sbin/php-fpm8.2", "-F"]
