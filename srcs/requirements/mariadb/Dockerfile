@@ -29,12 +29,13 @@ RUN mkdir -p /var/run/mysqld && \
 
 COPY ./tools/database.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/database.sh
+RUN /usr/local/bin/database.sh
 
 #COPY ./tools/database.sh /root/tools/
 #RUN chmod +x /root/tools/database.sh
+#RUN /root/tools/database.sh
 
 # Execute the script
-#RUN /root/tools/database.sh
 
 # Define the volumes
 VOLUME /var/lib/mysql
