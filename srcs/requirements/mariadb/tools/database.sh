@@ -1,39 +1,41 @@
 #!/bin/bash
 
 # script to create the database and the user
+sleep 10
 
-#mysql_install_db
-
-/etc/init.d/mariadb start
+#MYSQL_ROOT_PASSWORD="42root"
+#MYSQL_DATABASE=wordpress
+#MYSQL_PASSWORD=42userjdg
+#MYSQL_USER=userjdg
 
 # secure the installation
-mysql_secure_installation<<EOF
-n
-y
-$MYSQL_ROOT_PASSWORD
-$MYSQL_ROOT_PASSWORD
-y
-y
-y
-y
-EOF
+mariadb -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
 
-# create the database and the user
-#ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
-#GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION;
-#FLUSH PRIVILEGES;
-#mariadb -u root -p$MYSQL_ROOT_PASSWORD<<EOF
+mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
 
-mariadb -u root -p$MYSQL_ROOT_PASSWORD<<EOF
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
+# delete the anonymous user
+mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "DELETE FROM mysql.user WHERE User='';"
+
+# delete the remote root user
+mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');"
+
+# delete the test database
+mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "DROP DATABASE IF EXISTS test;"
+mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';"
+
+# reload the privileges
+mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
+
+mariadb -u root -p"$MYSQL_ROOT_PASSWORD" <<EOF
 CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
 CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';
 FLUSH PRIVILEGES;
 EOF
 
-#mysql -u root -p$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE < /tmp/wordpress.sql
-
-# stop the service
-/etc/init.d/mariadb stop
+#echo "SHOW DATABASES"
+#mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "SHOW DATABASES;"
+#echo "SHOW USERS"
+#mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT User FROM mysql.user;"
+#echo "SHOW GRANTS"
+#mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "SHOW GRANTS FOR '$MYSQL_USER'@'%';"
