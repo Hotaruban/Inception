@@ -41,6 +41,7 @@ clean:
 	@sudo docker volume rm $(docker volume ls -q) 2>/dev/null || true
 	@sudo docker network rm $(docker network ls -q) 2>/dev/null || true
 	@sudo rm -rf $(DATA_PATH)
+	@sudo rm -rf ./secrets
 
 prune:
 	@echo "Pruning the environment..."
