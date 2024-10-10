@@ -3,7 +3,7 @@
 # Start the MySQL service in the foreground
 mysqld --skip-networking &
 
-MYSQL_ROOT_PASSWORD=$(cat /run/secrets/mysql-root-password.txt)
+MYSQL_ROOT_PASSWORD=$(cat /run/secrets/mysql-root-password)
 
 # Maximum number of attempts before giving up
 MAX_ATTEMPTS=12
