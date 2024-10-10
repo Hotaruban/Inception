@@ -35,6 +35,8 @@ WORKDIR /var/www/html
 # Expose the port 9000 for information
 EXPOSE 9000
 
+USER www-data
+
 # Entrypoint and command to run the script and start the PHP
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/auto_config.sh"]
 
