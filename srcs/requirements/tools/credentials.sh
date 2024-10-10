@@ -46,6 +46,9 @@ echo "Passwords saved in the secrets folder."
 
 echo "Creating SSL certificate and key...";
 
+mkdir -p ./secrets/ssl
+chmod 777 ./secrets/ssl
+
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-keyout ./secrets/ssl/nginx-selfsigned.key \
 	-out ./secrets/ssl/nginx-selfsigned.crt \
