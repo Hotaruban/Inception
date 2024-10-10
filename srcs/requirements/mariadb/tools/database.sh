@@ -1,7 +1,7 @@
 #!/bin/bash
 
-MYSQL_PASSWORD=$(cat /run/secrets/mysql-user-password)
-MYSQL_ROOT_PASSWORD=$(cat /run/secrets/mysql-root-password)
+MYSQL_PASSWORD=$(cat /run/secrets/mysql_user_password)
+MYSQL_ROOT_PASSWORD=$(cat /run/secrets/mysql_root_password)
 
 # secure the installation
 mariadb -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
