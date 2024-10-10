@@ -29,16 +29,6 @@ if mysqladmin ping -h mariadb --silent; then
 		echo "WordPress is already installed."
 	fi
 
-
-	#wp core install --allow-root \
-	#	--url=$WORDPRESS_URL \
-	#	--title=$WORDPRESS_TITLE \
-	#	--admin_user=$WORDPRESS_ADMIN_USER \
-	#	--admin_password=$WORDPRESS_ADMIN_PASSWORD \
-	#	--admin_email=$WORDPRESS_ADMIN_EMAIL \
-	#	--path=/var/www/html
-
-
 	# Verify if the user exists
 	if wp user list --allow-root --field=user_login | grep -q "^$WORDPRESS_USER$"; then
 		echo "User '$WORDPRESS_USER' already exists."
@@ -52,13 +42,6 @@ if mysqladmin ping -h mariadb --silent; then
 
 		echo "User '$WORDPRESS_USER' created."
 	fi
-
-
-	#wp user create --allow-root \
-	#	$WORDPRESS_USER $WORDPRESS_USER_EMAIL \
-	#	--role=author \
-	#	--user_pass=$WORDPRESS_USER_PASSWORD \
-	#	--path=/var/www/html
 
 	wp plugin update --all --allow-root --path=/var/www/html
 
