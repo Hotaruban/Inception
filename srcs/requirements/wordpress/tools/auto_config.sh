@@ -22,11 +22,25 @@ if mysqladmin ping -h mariadb --silent; then
 		--admin_email=$WORDPRESS_ADMIN_EMAIL \
 		--path=/var/www/html
 
-	wp user create --allow-root \
-		$WORDPRESS_USER $WORDPRESS_USER_EMAIL \
-		--role=author \
-		--user_pass=$WORDPRESS_USER_PASSWORD \
-		--path=/var/www/html
+	# Verify if the user exists
+	if wp user list --field=user_login | grep -q "^$WORDPRESS_USER$"; then
+		echo "User '$WORDPRESS_USER' already exists."
+	else
+		# Create the user
+		wp user create --allow-root \
+			$WORDPRESS_USER $WORDPRESS_USER_EMAIL \
+			--role=author \
+			--user_pass=$WORDPRESS_USER_PASSWORD \
+			--path=/var/www/html
+
+		echo "User '$WORDPRESS_USER' created."
+	fi
+
+	#wp user create --allow-root \
+	#	$WORDPRESS_USER $WORDPRESS_USER_EMAIL \
+	#	--role=author \
+	#	--user_pass=$WORDPRESS_USER_PASSWORD \
+	#	--path=/var/www/html
 
 	wp plugin update --all --allow-root --path=/var/www/html
 
