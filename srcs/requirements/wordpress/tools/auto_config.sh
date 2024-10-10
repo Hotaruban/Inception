@@ -3,8 +3,11 @@
 if mysqladmin ping -h mariadb --silent; then
 	echo "MariaDB is up and running!"
 
-	#wp core download --allow-root
+	MYSQL_PASSWORD=$(cat /run/secrets/mysql-user-password.txt)
+	WORDPRESS_ADMIN_PASSWORD=$(cat /run/secrets/wordpress-admin-password.txt)
+	WORDPRESS_USER_PASSWORD=$(cat /run/secrets/wordpress-user-password.txt)
 
+	#wp core download --allow-root
 	sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
 	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config-sample.php
 	sed -i "s/localhost/$MYSQL_HOSTNAME/g" wp-config-sample.php

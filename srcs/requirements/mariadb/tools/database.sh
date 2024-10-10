@@ -1,5 +1,8 @@
 #!/bin/bash
 
+MYSQL_PASSWORD=$(cat /run/secrets/mysql-user-password.txt)
+MYSQL_ROOT_PASSWORD=$(cat /run/secrets/mysql-root-password.txt)
+
 # secure the installation
 mariadb -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
 
@@ -17,6 +20,7 @@ mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "DELETE FROM mysql.db WHERE Db='test
 
 # reload the privileges
 mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
+
 
 mariadb -u root -p"$MYSQL_ROOT_PASSWORD" <<EOF
 CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
