@@ -3,21 +3,6 @@ FROM debian:bookworm
 # Set the metadata for the image
 LABEL org.opencontainers.image.authors="Hotaruban"
 
-# Arguments for the Wordpress
-#ARG WORDPRESS_URL
-#ARG WORDPRESS_TITLE
-#ARG WORDPRESS_ADMIN_USER
-#ARG WORDPRESS_ADMIN_PASSWORD
-#ARG WORDPRESS_ADMIN_EMAIL
-#ARG WORDPRESS_USER
-#ARG WORDPRESS_USER_EMAIL
-#ARG WORDPRESS_USER_PASSWORD
-#ARG MYSQL_USER
-#ARG MYSQL_PASSWORD
-#ARG MYSQL_ROOT_PASSWORD
-#ARG MYSQL_DATABASE
-#ARG MYSQL_HOSTNAME
-
 # Use the root user to run the following commands
 USER root
 
