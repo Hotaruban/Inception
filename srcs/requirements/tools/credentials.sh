@@ -17,7 +17,7 @@ function ask_password() {
 
 	if [[ "$pass1" == "$pass2" ]]; then
 		echo "Passwords match."
-		# Sauvegarde le mot de passe dans le fichier
+		# Save the password in the file
 		echo "$pass1" > "$file"
 		echo "Password saved in $file."
 		break
@@ -34,19 +34,17 @@ function ask_password() {
 }
 
 # Ask for the passwords and save them in the secrets folder
-#ask_password "root mysql" "./secrets/mysql-root-password.txt"
-#ask_password "user mysql" "./secrets/mysql-user-password.txt"
+ask_password "mysql root" "./secrets/mysql-root-password.txt"
+ask_password "mysql user" "./secrets/mysql-user-password.txt"
 
-#ask_password "wordpress admin" "./secrets/mysql-wordpress-password.txt"
-#ask_password "wordpress user" "./secrets/mysql-wordpress-user-password.txt"
+ask_password "wordpress admin" "./secrets/wordpress-admin-password.txt"
+ask_password "wordpress user" "./secrets/wordpress-user-password.txt"
 
-#echo "Passwords saved in the secrets folder."
+echo "Passwords saved in the secrets folder."
 
 # create ssl certificate and key via openssl
 
 echo "Creating SSL certificate and key...";
-
-mkdir -p ./secrets/ssl
 
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-keyout ./secrets/ssl/nginx-selfsigned.key \
