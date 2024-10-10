@@ -45,6 +45,9 @@ services:
       dockerfile: Dockerfile
     volumes:
       - wordpress:/var/www/html
+    secret:
+      - ssl_certificate
+      - ssl_certificate_key
     depends_on:
       - wordpress
     restart: always
@@ -68,3 +71,9 @@ volumes:
       type: none
       device: /home/$USER/data/wordpress
       o: bind
+
+secrets:
+  ssl_certificate:
+    file: ../../secrets/ssl/nginx-selfsigned.crt
+  ssl_certificate_key:
+    file: ../../secrets/ssl/nginx-selfsigned.key
