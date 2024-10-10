@@ -34,24 +34,48 @@ function ask_password() {
 }
 
 # Ask for the passwords and save them in the secrets folder
-ask_password "mysql root" "./secrets/mysql-root-password.txt"
-ask_password "mysql user" "./secrets/mysql-user-password.txt"
+if [ -f ./secrets/mysql-root-password.txt ]; then
+	echo "The password for mysql root already exists."
+else
+	ask_password "mysql root" "./secrets/mysql-root-password.txt"
+fi
 
-ask_password "wordpress admin" "./secrets/wordpress-admin-password.txt"
-ask_password "wordpress user" "./secrets/wordpress-user-password.txt"
+if [ -f ./secrets/mysql-user-password.txt ]; then
+	echo "The password for mysql user already exists."
+else
+	ask_password "mysql user" "./secrets/mysql-user-password.txt"
+fi
+
+if [ -f ./secrets/wordpress-admin-password.txt ]; then
+	echo "The password for wordpress admin already exists."
+else
+	ask_password "wordpress admin" "./secrets/wordpress-admin-password.txt"
+fi
+
+if [ -f ./secrets/wordpress-user-password.txt ]; then
+	echo "The password for wordpress user already exists."
+else
+	ask_password "wordpress user" "./secrets/wordpress-user-password.txt"
+fi
 
 echo "Passwords saved in the secrets folder."
 
 # create ssl certificate and key via openssl
 
-echo "Creating SSL certificate and key...";
+if [ -d ./secrets/ssl ]; then
+	echo "SSL certificate and key already exist."
+	exit 0
+else
+	echo "Creating SSL certificate and key...";
 
-mkdir -p ./secrets/ssl
-chmod 777 ./secrets/ssl
+	mkdir -p ./secrets/ssl
+	chmod 777 ./secrets/ssl
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-	-keyout ./secrets/ssl/nginx-selfsigned.key \
-	-out ./secrets/ssl/nginx-selfsigned.crt \
-	-subj "/C=TH/ST=Bangkok/L=Bangkok/O=42BKK/OU=42/CN=jhurpy.42.fr"
 
-echo "SSL certificate and key created in the secrets folder."
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+		-keyout ./secrets/ssl/nginx-selfsigned.key \
+		-out ./secrets/ssl/nginx-selfsigned.crt \
+		-subj "/C=TH/ST=Bangkok/L=Bangkok/O=42BKK/OU=42/CN=jhurpy.42.fr"
+
+	echo "SSL certificate and key created in the secrets folder."
+fi
