@@ -45,7 +45,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - wordpress:/var/www/html
-    secret:
+    secrets:
       - ssl_certificate
       - ssl_certificate_key
     depends_on:
@@ -74,6 +74,6 @@ volumes:
 
 secrets:
   ssl_certificate:
-    file: ../../secrets/ssl/nginx-selfsigned.crt
+    file: ../secrets/ssl/nginx-selfsigned.crt
   ssl_certificate_key:
-    file: ../../secrets/ssl/nginx-selfsigned.key
+    file: ../secrets/ssl/nginx-selfsigned.key
