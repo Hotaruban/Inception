@@ -8,7 +8,7 @@ USER root
 
 # Update and upgrade the system and install the necessary packages
 RUN apt-get update && apt-get upgrade -y && \
-	apt-get install -y wget php php-fpm php-mysql mariadb-client && \
+	apt-get install -y wget php php-fpm php-mysql mariadb-client sudo && \
 	rm -rf /var/lib/apt/lists/*
 
 # Install Wordpress

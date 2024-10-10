@@ -43,7 +43,7 @@ if mysqladmin ping -h mariadb --silent; then
 		echo "User '$WORDPRESS_USER' already exists."
 	else
 		# Create the user
-		wp user create --allow-root \
+        sudo -u www-data -- wp user create \
 			$WORDPRESS_USER $WORDPRESS_USER_EMAIL \
 			--role=author \
 			--user_pass=$WORDPRESS_USER_PASSWORD \
