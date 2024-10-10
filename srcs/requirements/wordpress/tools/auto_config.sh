@@ -16,9 +16,9 @@ if mysqladmin ping -h mariadb --silent; then
 
 
 	# Verify if the database exists
-	if ! sudo -u www-data -- wp core is-installed --path=/var/www/html; then
-		# Install WordPress
-		sudo -u www-data -- wp core install \
+	if ! wp core is-installed --allow-root --path=/var/www/html; then
+		# Installer WordPress
+		wp core install --allow-root \
 			--url=$WORDPRESS_URL \
 			--title=$WORDPRESS_TITLE \
 			--admin_user=$WORDPRESS_ADMIN_USER \
@@ -28,6 +28,7 @@ if mysqladmin ping -h mariadb --silent; then
 	else
 		echo "WordPress is already installed."
 	fi
+
 
 	#wp core install --allow-root \
 	#	--url=$WORDPRESS_URL \
@@ -39,11 +40,11 @@ if mysqladmin ping -h mariadb --silent; then
 
 
 	# Verify if the user exists
-    if sudo -u www-data -- wp user list --field=user_login | grep -q "^$WORDPRESS_USER$"; then
+	if wp user list --allow-root --field=user_login | grep -q "^$WORDPRESS_USER$"; then
 		echo "User '$WORDPRESS_USER' already exists."
 	else
-		# Create the user
-        sudo -u www-data -- wp user create \
+		# Create a new user
+		wp user create --allow-root \
 			$WORDPRESS_USER $WORDPRESS_USER_EMAIL \
 			--role=author \
 			--user_pass=$WORDPRESS_USER_PASSWORD \
@@ -52,14 +53,14 @@ if mysqladmin ping -h mariadb --silent; then
 		echo "User '$WORDPRESS_USER' created."
 	fi
 
+
 	#wp user create --allow-root \
 	#	$WORDPRESS_USER $WORDPRESS_USER_EMAIL \
 	#	--role=author \
 	#	--user_pass=$WORDPRESS_USER_PASSWORD \
 	#	--path=/var/www/html
 
-	#wp plugin update --all --allow-root --path=/var/www/html
-	sudo -u www-data -- wp plugin update --all --path=/var/www/html
+	wp plugin update --all --allow-root --path=/var/www/html
 
 	chown -R www-data:www-data /var/www/html
 

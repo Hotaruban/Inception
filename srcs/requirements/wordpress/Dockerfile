@@ -8,7 +8,7 @@ USER root
 
 # Update and upgrade the system and install the necessary packages
 RUN apt-get update && apt-get upgrade -y && \
-	apt-get install -y wget php php-fpm php-mysql mariadb-client sudo && \
+	apt-get install -y wget php php-fpm php-mysql mariadb-client && \
 	rm -rf /var/lib/apt/lists/*
 
 # Install Wordpress
@@ -34,8 +34,6 @@ WORKDIR /var/www/html
 
 # Expose the port 9000 for information
 EXPOSE 9000
-
-USER www-data
 
 # Entrypoint and command to run the script and start the PHP
 ENTRYPOINT ["/bin/bash", "/usr/local/bin/auto_config.sh"]
