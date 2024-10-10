@@ -11,6 +11,7 @@ setup:
 	@echo "Setting up the environment..."
 	@sudo mkdir -p $(WP_PATH) $(DB_PATH)
 	@sudo mkdir -p ./secrets/ssl
+	@sudo chmod 777 ./secrets/ssl
 
 run: setup
 	@echo "Running the services..."
