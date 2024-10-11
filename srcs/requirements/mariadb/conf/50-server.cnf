@@ -1,4 +1,5 @@
 [mariadb]
+log_error = /var/log/mysql.err
 datadir = /var/lib/mysql
 socket = /run/mysqld/mysqld.sock
 bind_address = *
