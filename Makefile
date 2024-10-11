@@ -15,8 +15,8 @@ setup:
 
 run: setup
 	@echo "Running the services..."
-	@bash ./srcs/requirements/tools/credentials.sh && \
-	bash ./srcs/requirements/tools/create_env.sh && \
+	@bash ./srcs/requirements/tools/create_env.sh && \
+	bash ./srcs/requirements/tools/credentials.sh && \
 	docker-compose --env-file $(ENV_PATH) -f $(COMPOSE_FILE) up --build -d && \
 	echo "Services are up and running." || \
 	echo "Error: Unable to run the services."

@@ -6,7 +6,7 @@ ENV_FILE="../.env"
 # Creation of the .env file
 if [ -f "$ENV_FILE" ]; then
 	echo "The .env file already exists."
-	exit 1
+	exit 0
 fi
 {
     echo "# Environment variables for the project"
