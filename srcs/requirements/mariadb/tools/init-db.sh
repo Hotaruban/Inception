@@ -45,5 +45,7 @@ fi
 echo "MariaDB initialization complete. Restarting MariaDB with networking enabled."
 
 # Restart MariaDB with networking enabled to allow external connections
-killall mysqld
+#killall mysqld
+mysqladmin -u root -p"$MYSQL_ROOT_PASSWORD" shutdown
+
 mysqld
