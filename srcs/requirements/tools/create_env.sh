@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # Path to the .env file
-ENV_FILE="./src/.env"
+ENV_FILE="./srcs/.env"
 
 # Creation of the .env file
 if [ -f "$ENV_FILE" ]; then
 	echo "The .env file already exists."
 	exit 0
 fi
+	echo "Creating the .env file..."
 {
     echo "# Environment variables for the project"
     echo ""
