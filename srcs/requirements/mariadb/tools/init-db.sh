@@ -20,6 +20,14 @@ check_mariadb_with_password() {
 	mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "SELECT 1;" >/dev/null 2>&1
 }
 
+check_mariadb_database_with_password() {
+	mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "USE $MYSQL_DATABASE;" >/dev/null 2>&1
+}
+
+check_mariadb_database_without_password() {
+	mariadb -u root -e "USE $MYSQL_DATABASE;" >/dev/null 2>&1
+}
+
 # Wait for MariaDB to be ready (retry up to MAX_ATTEMPTS times)
 until check_mariadb_without_password || check_mariadb_with_password; do
 	attempt=$((attempt+1))
@@ -34,7 +42,7 @@ done
 echo "MariaDB is ready for initialization."
 
 # Check if the database already exists
-if mariadb -u root -e "USE $MYSQL_DATABASE;" >/dev/null 2>&1; then
+if check_mariadb_database_with_password || check_mariadb_database_without_password; then
 	echo "Database $MYSQL_DATABASE already exists. Skipping initialization."
 else
 	echo "Database $MYSQL_DATABASE does not exist. Running initialization script."
@@ -42,10 +50,16 @@ else
 	/usr/local/bin/database.sh
 fi
 
-echo "MariaDB initialization complete. Restarting MariaDB with networking enabled."
+#if mariadb -u root -e "USE $MYSQL_DATABASE;" >/dev/null 2>&1; then
+#	echo "Database $MYSQL_DATABASE already exists. Skipping initialization."
+#else
+#	echo "Database $MYSQL_DATABASE does not exist. Running initialization script."
+#	# Run the database initialization script
+#	/usr/local/bin/database.sh
+#fi
 
 # Restart MariaDB with networking enabled to allow external connections
-#killall mysqld
+echo "MariaDB initialization complete. Restarting MariaDB with networking enabled."
 mysqladmin -u root -p"$MYSQL_ROOT_PASSWORD" shutdown
-
+echo "MariaDB is ready for connections."
 mysqld
