@@ -12,9 +12,13 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # copy our configuration file of nginx to the container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY tools/check_wordpress.sh /usr/local/bin/check_wordpress.sh
 
 # Expose the port 443 for information
 EXPOSE 443
 
+# exucute shell script check_wordpress.sh to check if wordpress is installed
+ENTRYPOINT [ "sh", "/usr/local/bin/check_wordpress.sh" ]
+
 # execute the command to start nginx
-ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
+#ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
