@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to the .env file
-ENV_FILE="../.env"
+ENV_FILE="./src/.env"
 
 # Creation of the .env file
 if [ -f "$ENV_FILE" ]; then

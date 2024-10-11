@@ -20,7 +20,7 @@ function ask_password() {
 		# Save the password in the file
 		echo "$pass1" > "$file"
 		echo "Password saved in $file."
-		echo "$user=$pass1" >> ../.env
+		echo "$user=$pass1" >> ./srcs/.env
 		break
 	else
 		echo "Passwords do not match. Try again."
