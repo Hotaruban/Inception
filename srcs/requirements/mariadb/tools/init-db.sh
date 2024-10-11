@@ -50,14 +50,6 @@ else
 	/usr/local/bin/database.sh
 fi
 
-#if mariadb -u root -e "USE $MYSQL_DATABASE;" >/dev/null 2>&1; then
-#	echo "Database $MYSQL_DATABASE already exists. Skipping initialization."
-#else
-#	echo "Database $MYSQL_DATABASE does not exist. Running initialization script."
-#	# Run the database initialization script
-#	/usr/local/bin/database.sh
-#fi
-
 # Restart MariaDB with networking enabled to allow external connections
 echo "MariaDB initialization complete. Restarting MariaDB with networking enabled."
 mysqladmin -u root -p"$MYSQL_ROOT_PASSWORD" shutdown
