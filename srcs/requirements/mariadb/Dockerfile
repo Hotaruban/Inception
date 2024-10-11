@@ -18,9 +18,9 @@ COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Create directory for MySQL socket with correct permissions
 RUN mkdir -p /var/run/mysqld && \
-	chown -R mysql:mysql /var/run/mysqld && \
-	chmod 777 /var/run/mysqld
-
+	chown -R mysql:mysql /var/run/mysqld /var/log/ && \
+	chmod 777 /var/run/mysqld /var/log/
+	
 # Copy the script to the container and set the permissions
 COPY ./tools/database.sh /usr/local/bin/
 COPY ./tools/init-db.sh /usr/local/bin/
