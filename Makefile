@@ -16,6 +16,7 @@ setup:
 run: setup
 	@echo "Running the services..."
 	@bash ./srcs/requirements/tools/credentials.sh && \
+	@bash ./srcs/requirements/tools/create_env.sh && \
 	docker-compose --env-file $(ENV_PATH) -f $(COMPOSE_FILE) up --build -d && \
 	echo "Services are up and running." || \
 	echo "Error: Unable to run the services."
@@ -43,6 +44,7 @@ clean:
 	@sudo docker volume rm $(docker volume ls -q) 2>/dev/null || true
 	@sudo docker network rm $(docker network ls -q) 2>/dev/null || true
 	@sudo rm -rf $(DATA_PATH)
+	@sudo rm -rf ./srcs/.env
 	@sudo rm -rf ./secrets
 
 prune:

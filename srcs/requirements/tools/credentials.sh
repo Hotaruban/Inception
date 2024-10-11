@@ -20,6 +20,7 @@ function ask_password() {
 		# Save the password in the file
 		echo "$pass1" > "$file"
 		echo "Password saved in $file."
+		echo "$user=$pass1" >> ../.env
 		break
 	else
 		echo "Passwords do not match. Try again."
@@ -37,25 +38,25 @@ function ask_password() {
 if [ -f ./secrets/mysql-root-password.txt ]; then
 	echo "The password for mysql root already exists."
 else
-	ask_password "mysql root" "./secrets/mysql-root-password.txt"
+	ask_password "MYSQL_ROOT_PASSWORD" "./secrets/mysql-root-password.txt"
 fi
 
 if [ -f ./secrets/mysql-user-password.txt ]; then
 	echo "The password for mysql user already exists."
 else
-	ask_password "mysql user" "./secrets/mysql-user-password.txt"
+	ask_password "MYSQL_PASSWORD" "./secrets/mysql-user-password.txt"
 fi
 
 if [ -f ./secrets/wordpress-admin-password.txt ]; then
 	echo "The password for wordpress admin already exists."
 else
-	ask_password "wordpress admin" "./secrets/wordpress-admin-password.txt"
+	ask_password "WORDPRESS_ADMIN_PASSWORD" "./secrets/wordpress-admin-password.txt"
 fi
 
 if [ -f ./secrets/wordpress-user-password.txt ]; then
 	echo "The password for wordpress user already exists."
 else
-	ask_password "wordpress user" "./secrets/wordpress-user-password.txt"
+	ask_password "WORDPRESS_USER_PASSWORD" "./secrets/wordpress-user-password.txt"
 fi
 
 echo "Passwords saved in the secrets folder."
