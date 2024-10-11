@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if mysqladmin ping -h mariadb --silent; then
-	echo "MariaDB is up and running!"
+	echo "Success: MariaDB is up and running!"
 
 	MYSQL_PASSWORD=$(cat /run/secrets/mysql_user_password)
 	WORDPRESS_ADMIN_PASSWORD=$(cat /run/secrets/wordpress_admin_password)
@@ -26,12 +26,12 @@ if mysqladmin ping -h mariadb --silent; then
 			--admin_email=$WORDPRESS_ADMIN_EMAIL \
 			--path=/var/www/html
 	else
-		echo "WordPress is already installed."
+		echo "Success: WordPress is already installed."
 	fi
 
 	# Verify if the user exists
 	if wp user list --allow-root --field=user_login | grep -q "^$WORDPRESS_USER$"; then
-		echo "User '$WORDPRESS_USER' already exists."
+		echo "Success: User '$WORDPRESS_USER' already exists."
 	else
 		# Create a new user
 		wp user create --allow-root \
@@ -40,7 +40,7 @@ if mysqladmin ping -h mariadb --silent; then
 			--user_pass=$WORDPRESS_USER_PASSWORD \
 			--path=/var/www/html
 
-		echo "User '$WORDPRESS_USER' created."
+		echo "Success: User '$WORDPRESS_USER' created."
 	fi
 
 	wp plugin update --all --allow-root --path=/var/www/html
@@ -50,7 +50,7 @@ if mysqladmin ping -h mariadb --silent; then
 	/usr/sbin/php-fpm8.2 -F
 
 else
-	echo "MariaDB is not available. Exiting."
+	echo "Warning: MariaDB is not available. Please check the connection."
 	sleep 5
 	exit 1
 fi

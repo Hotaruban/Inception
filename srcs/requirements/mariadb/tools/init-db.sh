@@ -27,11 +27,11 @@ until check_mariadb_without_password || check_mariadb_with_password; do
 		echo "MariaDB did not become ready in time, exiting..."
 		exit 1
 	fi
-	echo "Waiting for MariaDB to be ready... Attempt $attempt/$MAX_ATTEMPTS"
+	echo "Waiting for MariaDB to be ready... Attempt [$attempt/$MAX_ATTEMPTS]"
 	sleep 5
 done
 
-echo "MariaDB is ready."
+echo "MariaDB is ready for initialization."
 
 # Check if the database already exists
 if mariadb -u root -e "USE $MYSQL_DATABASE;" >/dev/null 2>&1; then
@@ -41,6 +41,8 @@ else
 	# Run the database initialization script
 	/usr/local/bin/database.sh
 fi
+
+echo "MariaDB initialization complete. Restarting MariaDB with networking enabled."
 
 # Restart MariaDB with networking enabled to allow external connections
 killall mysqld
