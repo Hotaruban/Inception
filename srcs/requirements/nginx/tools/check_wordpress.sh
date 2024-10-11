@@ -5,7 +5,7 @@ MAX_ATTEMPTS=12
 attempt=0
 
 # Verify if WordPress is ready
-until $(curl --output /dev/null --silent --head --fail http://localhost/wp-admin/install.php); do
+until $(curl --output /dev/null --silent --head --fail http://wordpress); do
 	attempt=$((attempt+1))
 	if [ $attempt -ge $MAX_ATTEMPTS ]; then
 		echo "WordPress did not become ready in time, exiting..."
